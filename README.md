@@ -2,7 +2,7 @@
 
 > A five-year, evidence-driven learning and engineering program (October 2026 → October 2031).
 >
-> **Working language:** Persian for planning; English for technical terms, code, and APIs.
+> **Working language:** Persian mentoring/reviews; English repository docs, code, identifiers, and technical terms.
 
 ## Mission
 
@@ -19,7 +19,7 @@ This is a learning repository; it is **not** a safety-certified robot controller
 3. Complete [CURRENT_STATE.md](CURRENT_STATE.md); **unknown** means not yet assessed, not unskilled.
 4. Open [the current 13-week plan](docs/roadmap/Q1-2026-10.md).
 5. Open [NEXT_SESSION.md](NEXT_SESSION.md) at the start/end of every session.
-6. Use GitHub Issues for tasks, PRs for significant updates, and tracked experiments for evidence.
+6. Follow [the Q1 milestone (#5)](https://github.com/hamora1370/Physical-AI/issues/5); start from [Issue #1](https://github.com/hamora1370/Physical-AI/issues/1). Use Issues for tasks, PRs for significant updates, and tracked experiments for evidence.
 
 ## Operating rules
 
@@ -43,6 +43,7 @@ This is a learning repository; it is **not** a safety-certified robot controller
 | Experiments | [Experiment template](docs/templates/EXPERIMENT.md) |
 | Review cadence | [Reviews](docs/reviews/README.md) |
 | Learning resources | [Resource index](references/RESOURCES.md) |
+| AI review / collaboration | [Review prompt](docs/reviews/AI_REVIEW_PROMPT.md) · [AGENTS.md](AGENTS.md) |
 | Last state, next action | [NEXT_SESSION.md](NEXT_SESSION.md) |
 | Scope decisions | [ADR-0001](docs/decisions/ADR-0001-scope.md) |
 
