@@ -81,3 +81,51 @@ data: 'Hello World: 23'
 2. **Completed:** with talker running, inspected `ros2 node list`, `ros2 topic list -t`, and echoed one `/chatter` message.
 3. Independently explain publisher/subscriber/topic and message type, then learn Services and Actions.
 4. Keep this evidence linked from Issue #2; assess skill matrix only after independent exercise.
+
+## Topic endpoint QoS / interface inspection — PASS (2026-10-23)
+
+The user ran:
+
+```bash
+ros2 topic info /chatter -v
+ros2 interface show example_interfaces/msg/String
+```
+
+Important exact observed output (identifiers abbreviated; no personal system details):
+
+```text
+Type: example_interfaces/msg/String
+Publisher count: 1
+Node name: talker
+Node namespace: /
+Topic type: example_interfaces/msg/String
+Topic type hash: RIHS01_5509d866a579951f2fc6c19577c32605ba16f308cae7b498341d79536d4eb06b
+Endpoint type: PUBLISHER
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): KEEP_LAST (7)
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+Subscription count: 0
+```
+
+Interface:
+
+```text
+# This is an example message of using a primitive datatype, string.
+# If you want to test with this that's fine, but if you are deploying
+# it into a system you should create a semantically meaningful message type.
+# If you want to embed it in another message, use the primitive data type instead.
+string data
+```
+
+**Result: PASS.** This is the **publisher endpoint's** QoS profile, not a universal fixed policy for every entity on `/chatter`. `KEEP_LAST (7)` constrains history depth, `VOLATILE` does not persist past messages for late-joining subscribers. The subscriber count was 0 **at this moment** after the one-shot `ros2 topic echo --once` had exited (and the earlier listener was no longer running); it is not a failure. In this specific demo the message field is `string data`, and the package comment explicitly advises semantic messages for deployed systems.
+
+### Next experiment
+
+While publisher is running, launch `ros2 run demo_nodes_py listener` in a second terminal, then run `ros2 topic info /chatter -v` in a **third** terminal and verify `Subscription count` changes from 0 to >=1 after discovery. Stop listener with Ctrl+C and verify eventual return to 0. On that observation the student can explain endpoint discovery and QoS independently.
+
+Still missing direct `echo "$ROS_DISTRO"` output and `dpkg-query` verification of installed `ros-lyrical-desktop` and `ros-dev-tools`. RViz/Gazebo have not been tested.
