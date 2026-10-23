@@ -1,40 +1,35 @@
 # Next session — resume here
 
-**Updated:** 2026-10-23
-**Track:** Y1 / Q1 / Week 1 (starts 2026-10-26)
-**Status:** Initial repository scaffolding complete; robotics environment and skills **not yet verified**.
+**Updated:** 2026-10-23  
+**Track:** Y1 / Q1 / Week 1  
+**Status:** Ubuntu environment installed and verified; ROS 2 installation next.
 
 ## Last verified working state
-- Five-year plan, quarterly plan, skill matrix, experiment and review templates committed on `main`.
-- First educational FK exercise and GitHub Actions test configuration committed; **CI execution and test result not yet confirmed**.
-- Starter Issues #1–#5 created.
-- No ROS 2 installation, simulation, physical robot or mastery assessment has been verified.
 
-## Chosen target stack (not yet installed)
-Ubuntu 26.04.1 LTS + ROS 2 Lyrical + Gazebo Jetty + MoveIt 2 (Lyrical). Isaac Sim 6.1 lists only Ubuntu 22.04/24.04, so evaluate a secondary compatible environment later.
-
-## Confirmed deployment decision (2026-10-23)
-
-**Proceed** with an on-demand WSL2 `PhysicalAI` instance. ERP/ToliHub work and robotics work are **separate working modes**. No further container optimization or RAM-attribution study is needed for this installation decision. Existing WSL cap remains 16 GB globally. Existing Ubuntu-24.04 and Docker environments remain unchanged.
-
-**Installation plan:** [WSL2-ON-DEMAND.md](docs/infrastructure/WSL2-ON-DEMAND.md). Base distro and ROS are **not installed yet**.
-
-## Last verified host preflight (2026-10-23)
-WSL **2.3.26.0** (below 2.4.10 requirement for Canonical .wsl image); online catalog does not list Ubuntu-26.04. **C: 1.60 GB free**, **D: 119.40 GB free**. These are user-reported values. Existing ERP distro and Docker remain untouched; new Ubuntu/ROS are NOT installed.
+- New `PhysicalAI` distro installed via official Ubuntu 26.04.1 WSL AMD64 image **on D:** and SHA256 verified.
+- `PhysicalAI` is Ubuntu 26.04.1 LTS, kernel `6.18.54.1-microsoft-standard-WSL2`.
+- Root Linux filesystem ~98 GB, ~1.3 GB used, ~92 GB available on first boot.
+- About ~624 MiB RAM used when freshly booted; global WSL memory cap remains 16 GB.
+- Original `Ubuntu-24.04` remains default and `docker-desktop` remains installed.
+- ROS 2, RViz and Gazebo **not installed or tested**.
+- A full switch back to ERP mode has not yet been explicitly tested after install; Issue #1 remains open for that final verification.
 
 ## Next single action
-Free ordinary Windows C: space carefully to at least **8–10 GB** (planning target), without deleting WSL/Docker virtual disks or repositories. At a safe break after ERP/CI/database tasks stop, run `wsl --update`; verify WSL >=2.4.10. Then follow [the updated guide](docs/infrastructure/WSL2-ON-DEMAND.md) to download Ubuntu 26.04.1 to D:, verify checksum and install ONLY `PhysicalAI` to D:.
 
-## Next in sequence
-1. [#1 Baseline / isolated environment](https://github.com/hamora1370/Physical-AI/issues/1) — start here.
-2. [#2 ROS 2 first nodes](https://github.com/hamora1370/Physical-AI/issues/2) — after environment is reproducible.
-3. [#3 Derive/test FK](https://github.com/hamora1370/Physical-AI/issues/3) — math track, can be independent of ROS.
-4. [#5 Q1 milestone](https://github.com/hamora1370/Physical-AI/issues/5) — source of quarterly outcome.
-5. [#4 GitHub Projects views](https://github.com/hamora1370/Physical-AI/issues/4) — optional board configuration.
+From **PhysicalAI** Linux shell, run `cd ~`; then follow [ROS 2 Lyrical first-install guide](docs/infrastructure/ROS2-LYRICAL-FIRST-BOOT.md) beginning with locale/apt checks, followed by official ROS apt-source setup and `ros-lyrical-desktop` installation.
 
-## Current blockers
-- WSL runtime update requires more C: headroom and safe break in ERP workloads. Ubuntu 26.04 distro and ROS not installed.
-- Test workflow status not checked; do not report CI green without run evidence.
+**Execution issue:** [#2 ROS 2 installation & talker/listener verification](https://github.com/hamora1370/Physical-AI/issues/2)
 
-## End of every session
-Record: date, last passing command/test, commit SHA, experiment ID (if any), blocker, and **one concrete next action**. Keep this file concise.
+## Follow-up
+
+1. Two-terminal ROS talker/listener smoke test and command output.
+2. Confirm clean return to original ERP distro and close [#1](https://github.com/hamora1370/Physical-AI/issues/1).
+3. Test WSLg/RViz before planning Gazebo Jetty.
+4. Update `docs/skills/SKILL_MATRIX.csv` only after evidence-based assessment.
+
+## Safety / workflow
+
+- Run ROS code under Linux `~/`, not `/mnt/c/Users/...`.
+- Never stop active ERP tests, databases or CI runner mid-write to switch workloads.
+- Continue treating Docker container RAM/CPU as normal during ERP development; use alternating work modes rather than optimizing it for robotics.
+- Do not claim success for installations or tests that have not been shown.
