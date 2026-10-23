@@ -8,3 +8,5 @@
 | Quarterly | 2 h | [Quarterly](QUARTERLY_TEMPLATE.md) | Advance, repeat, or revise the gate |
 
 For each completed review, create a dated copy (example: `docs/reviews/2026-11-01-weekly.md`) or a tracked Issue linking evidence. Templates alone are not evidence of performed reviews.
+
+For an evidence-grounded review with ChatGPT or another assistant, use [the AI review prompt](AI_REVIEW_PROMPT.md). The assistant must read live GitHub state and explicitly mark missing evidence.
