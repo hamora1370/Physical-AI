@@ -19,8 +19,11 @@ Ubuntu 26.04.1 LTS + ROS 2 Lyrical + Gazebo Jetty + MoveIt 2 (Lyrical). Isaac Si
 
 **Installation plan:** [WSL2-ON-DEMAND.md](docs/infrastructure/WSL2-ON-DEMAND.md). Base distro and ROS are **not installed yet**.
 
+## Last verified host preflight (2026-10-23)
+WSL **2.3.26.0** (below 2.4.10 requirement for Canonical .wsl image); online catalog does not list Ubuntu-26.04. **C: 1.60 GB free**, **D: 119.40 GB free**. These are user-reported values. Existing ERP distro and Docker remain untouched; new Ubuntu/ROS are NOT installed.
+
 ## Next single action
-In PowerShell check `wsl --version`, `wsl --list --online`, WSL `--location`/`--name` support and available SSD drive space. Then install **only** Ubuntu 26.04 as a new `PhysicalAI` distribution on the selected drive. Do not modify or remove existing distributions.
+Free ordinary Windows C: space carefully to at least **8–10 GB** (planning target), without deleting WSL/Docker virtual disks or repositories. At a safe break after ERP/CI/database tasks stop, run `wsl --update`; verify WSL >=2.4.10. Then follow [the updated guide](docs/infrastructure/WSL2-ON-DEMAND.md) to download Ubuntu 26.04.1 to D:, verify checksum and install ONLY `PhysicalAI` to D:.
 
 ## Next in sequence
 1. [#1 Baseline / isolated environment](https://github.com/hamora1370/Physical-AI/issues/1) — start here.
@@ -30,7 +33,7 @@ In PowerShell check `wsl --version`, `wsl --list --online`, WSL `--location`/`--
 5. [#4 GitHub Projects views](https://github.com/hamora1370/Physical-AI/issues/4) — optional board configuration.
 
 ## Current blockers
-- New install drive capacity and supported WSL installation flags not yet verified; robotics distro and ROS not yet installed.
+- WSL runtime update requires more C: headroom and safe break in ERP workloads. Ubuntu 26.04 distro and ROS not installed.
 - Test workflow status not checked; do not report CI green without run evidence.
 
 ## End of every session
