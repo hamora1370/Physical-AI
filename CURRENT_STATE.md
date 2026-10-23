@@ -32,8 +32,10 @@
 - **Running WSL:** `Ubuntu-24.04` (default) and `docker-desktop`, both running; `vmmemWSL` Windows process working set ≈8.31 GB at snapshot time.
 - **Observed inside WSL:** total ≈15 GiB, Linux `MemAvailable` ≈8.5 GiB, swap used ≈0.5 GiB. This is *not* extra Windows-free RAM and does not split usage by distro.
 - **Observed Docker (historical snapshot only):** six containers were running during a software development session. This workload is expected and **not** a blocker or optimization target for the Physical AI setup.
-- **Operating decision:** ERP/ToliHub and Physical AI development will run **sequentially**, not as concurrent heavy workloads. Proceed with a second, on-demand WSL2 distro; no further Docker memory investigation required. Gracefully complete development tasks and close Docker Desktop before switching modes. Only disk capacity and WSL CLI compatibility still need minimal installation checks.
+- **Operating decision:** ERP/ToliHub and Physical AI development will run **sequentially**, not as concurrent heavy workloads. No further Docker memory investigation required. **Install is gated on WSL runtime >=2.4.10 and safe Windows disk headroom**; gracefully complete workloads before shared WSL update. Only disk capacity and WSL CLI compatibility still need minimal installation checks.
 - **Selected target (not installed):** isolated WSL2 distro named `PhysicalAI` with Ubuntu 26.04.1 LTS, ROS 2 Lyrical and Gazebo Jetty. [Installation and switching instructions](docs/infrastructure/WSL2-ON-DEMAND.md).
+- **Measured WSL preflight (2026-10-23):** WSL **2.3.26.0** (kernel 5.15.167.4-1), WSLg **1.0.65**, Windows build **10.0.26200.7623**; `wsl --list --online` does not show `Ubuntu-26.04`. New .wsl image format requires **WSL >=2.4.10**.
+- **Disk free space:** **C: 1.60 GB**, **D: 119.40 GB** (user-provided readings). C: needs more headroom before system-wide WSL update; target install location `D:\\WSL\\PhysicalAI`. Image download also to D:. D: media type unverified.
 - **Public repository**: do not commit secrets, customer information or private operational data.
 
 ## Fill in before first sprint
@@ -47,6 +49,7 @@
 
 ## Current open questions
 
-1. Which existing SSD drive has enough free space for the new distro? Does the installed WSL CLI support `--name`, `--location` and `--no-launch`?
+1. Restore safe C: headroom (8–10 GB as a planning target), then update shared WSL to >=2.4.10 at a safe workload break and verify install flags.
+2. Verify the official Ubuntu 26.04.1 WSL image/checksum before installing to D:.
 2. What robotics hardware, if any, is already available?
 3. What exercise can be independently tested before ROS hardware integration?
