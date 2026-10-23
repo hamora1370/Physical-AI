@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+# Robotics / simulation generated
+build/
+install/
+log/
+*.bag
+*.db3
+*.mcap
+# Models / datasets; use external versioned storage
+*.pt
+*.pth
+*.ckpt
+*.onnx
+datasets/
+artifacts/
+# Local IDE / OS
+.vscode/
+.idea/
+.DS_Store
