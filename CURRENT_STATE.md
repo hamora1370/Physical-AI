@@ -28,6 +28,12 @@
 - **Planned capacity**: ~5 h/week in Y1 and Y2; adjust to protect ERP and manufacturing priorities.
 - **Budget**: not assigned; prefer simulation and reusing existing hardware.
 - **Infrastructure**: isolate robotics development from production ERP resources; do not assume Ubuntu / ROS is installed.
+- **Observed host (2026-10-23, user-reported PowerShell):** Windows with 31.5 GB installed RAM, 4.2 GB Windows available RAM, WSL2 global `.wslconfig` `memory=16GB` and `defaultVhdSize=100GB`.
+- **Running WSL:** `Ubuntu-24.04` (default) and `docker-desktop`, both running; `vmmemWSL` Windows process working set ≈8.31 GB at snapshot time.
+- **Observed inside WSL:** total ≈15 GiB, Linux `MemAvailable` ≈8.5 GiB, swap used ≈0.5 GiB. This is *not* extra Windows-free RAM and does not split usage by distro.
+- **Observed Docker:** six running containers totaling ≈3.0 GiB of Docker-reported memory; one E2E client ≈1.95 GiB / 127% CPU at snapshot time. These values fluctuate and are not additive to the WSL process working set.
+- **Constraint:** host Windows memory headroom is low; hold new-distro installation while identifying transient test jobs, caches and large host processes. Never interrupt active tests / database writes without confirming they are safe to stop.
+- **Selected target (not installed):** isolated Ubuntu 26.04.1 LTS, ROS 2 Lyrical and Gazebo Jetty. Prefer on-demand distro use.
 - **Public repository**: do not commit secrets, customer information or private operational data.
 
 ## Fill in before first sprint
