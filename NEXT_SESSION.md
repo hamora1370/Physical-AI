@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-23  
 **Track:** Y1 / Q1 / Week 1  
-**Status:** Ubuntu verified; ROS 2 sample Publish/Subscribe **PASS**. Other ROS topics and GUI tools pending.
+**Status:** Ubuntu verified; ROS 2 sample Publish/Subscribe **PASS** and CLI introspection **PASS**. Other ROS concepts and GUI tools pending.
 
 ## Last verified working state
 
@@ -11,23 +11,28 @@
 - `ros2 pkg list | head` showed multiple packages including `action_msgs`.
 - **Smoke test PASS:** `demo_nodes_cpp talker` published numbered messages and `demo_nodes_py listener` received 24–34 in sequence. [Raw log excerpts / evidence](docs/evidence/2026-10-23-ros2-talker-listener.md).
 - Confirmed via the user transcript: `source /opt/ros/lyrical/setup.bash` and both ROS 2 programs could execute.
+- **CLI introspection PASS:** `/talker` visible, `/chatter [example_interfaces/msg/String]` shown by `ros2 topic list -t`, `ros2 topic echo /chatter --once` returned `data: 'Hello World: 23'`.
+- **Correction:** message type is `example_interfaces/msg/String` in the observed Lyrical example, not `std_msgs/msg/String`.
 - **Not yet independently verified:** `echo "$ROS_DISTRO"`, `dpkg-query` status of `ros-lyrical-desktop`/`ros-dev-tools`, Services/Actions exercise, independent node implementation, RViz/Gazebo.
 - A full ERP-mode return test remains to be explicitly documented in [#1](https://github.com/hamora1370/Physical-AI/issues/1).
 
 ## Next single action
 
-Complete the first **CLI introspection exercise** while the sample talker is running:
+Inspect the observed Topic's contract while the example talker is running:
 
 ```bash
 source /opt/ros/lyrical/setup.bash
-echo "$ROS_DISTRO"
-dpkg-query -W -f='${Package} ${Status} ${Version}\n' ros-lyrical-desktop ros-dev-tools
-ros2 node list
-ros2 topic list -t
-ros2 topic echo /chatter --once
+ros2 topic info /chatter -v
+ros2 interface show example_interfaces/msg/String
 ```
 
-Observe that `/chatter` carries `std_msgs/msg/String`. Record the output and explain what a Node, Topic and message type mean, then continue to a Service and Action example in [Issue #2](https://github.com/hamora1370/Physical-AI/issues/2). Source from the official [runbook](docs/infrastructure/ROS2-LYRICAL-FIRST-BOOT.md). Run ROS work inside `~/` rather than the Windows-mounted `/mnt/c/` directory.
+Verify `echo "$ROS_DISTRO"` (expected `lyrical`) and the metapackage installation with:
+
+```bash
+dpkg-query -W -f='${Package} ${Status} ${Version}\n' ros-lyrical-desktop ros-dev-tools
+```
+
+Next, explain Nodes, Topics, message types and QoS at a beginner level, then introduce Service/Action examples in [Issue #2](https://github.com/hamora1370/Physical-AI/issues/2). Work in the Linux home directory `~/` for actual project files.
 
 ## Next milestones
 
