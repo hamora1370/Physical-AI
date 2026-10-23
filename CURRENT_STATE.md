@@ -1,55 +1,54 @@
-# Current state — initial assessment
+# Current state — verified workstation setup
 
-**Last updated:** 2026-10-23
-**Phase:** Y1 / Q1 / setup
-**Assessment status:** baseline **not yet completed**. Do not claim mastery from prior experience alone.
+**Last updated:** 2026-10-23  
+**Phase:** Y1 / Q1 / Ubuntu installed, ROS 2 pending  
+**Source:** user-provided console transcripts. Physical testing, ROS installation and robotics skills have not yet been verified.
 
-## Confirmed relevant background
+## Verified workstation environment
 
-- Mechanical engineering and CAD design.
-- Full-stack and industrial software engineering; experience with PostgreSQL, event-driven systems and ERP development.
-- Practical 3D-printing/production experience.
-- Interest in robot learning and ROS 2.
+| Item | Observed status |
+| --- | --- |
+| Robotics WSL2 distro | `PhysicalAI` — Ubuntu 26.04.1 LTS (Resolute), x86_64 |
+| Linux kernel | `6.18.54.1-microsoft-standard-WSL2` |
+| Installation source | Ubuntu 26.04.1 official WSL AMD64 image; SHA256 matched the expected value |
+| Install directory | `D:\WSL\PhysicalAI` — successful custom-location install |
+| Existing development distro | `Ubuntu-24.04` preserved and still WSL default (*) |
+| Docker integration | `docker-desktop` preserved; it was stopped during Linux setup |
+| Memory inside new distro | ~15 GiB total, ~624 MiB used, ~15 GiB available at first boot |
+| Swap | 4.0 GiB; 0 used on first boot |
+| Linux root virtual filesystem | ~98 GiB capacity, ~1.3 GiB used, ~92 GiB available |
+| ROS 2 | **not installed/verified** |
+| RViz / Gazebo | **not installed/verified** |
+| Physical robot | **none verified** |
 
-## Unknowns to assess (not assumed to be weak)
+**Important:** Linux root filesystem capacity is not the actual size occupied by the sparse VHDX on host D:. Previously measured Windows disk free-space values were C: 1.60 GB, D: 119.40 GB **before** image installation; current host free space has not been remeasured.
 
-| Skill / equipment | Current verified level | How to assess |
-|---|---|---|
-| Linux & Python for robotics | unassessed | reproduce a ROS 2 workspace and scripted exercise |
-| Linear algebra / SE(3) | unassessed | explain and implement coordinate transforms |
-| FK & IK | unassessed | derive and independently test sample manipulator |
-| Feedback control | unassessed | closed-loop control explanation and measured response |
-| ROS 2 nodes/tf2/actions | unassessed | working example and logs |
-| Robot hardware | unassessed | BOM/inventory and safe bench test |
-| GPU and depth camera | unassessed | record actual available hardware before buying |
+The transcript establishes that the new distro could be exited and restarted. A full, verified return to ERP mode after robotics mode has **not** been recorded yet. `wsl --list --verbose` showed a transitional `PhysicalAI Running` shortly after shell exit whereas `wsl --list --running` immediately reported none. This is not currently sufficient evidence of a fault.
 
-## Constraints
+## Work-mode agreement
 
-- **Planned capacity**: ~5 h/week in Y1 and Y2; adjust to protect ERP and manufacturing priorities.
-- **Budget**: not assigned; prefer simulation and reusing existing hardware.
-- **Infrastructure**: isolate robotics development from production ERP resources; do not assume Ubuntu / ROS is installed.
-- **Observed host (2026-10-23, user-reported PowerShell):** Windows with 31.5 GB installed RAM, 4.2 GB Windows available RAM, WSL2 global `.wslconfig` `memory=16GB` and `defaultVhdSize=100GB`.
-- **Running WSL:** `Ubuntu-24.04` (default) and `docker-desktop`, both running; `vmmemWSL` Windows process working set ≈8.31 GB at snapshot time.
-- **Observed inside WSL:** total ≈15 GiB, Linux `MemAvailable` ≈8.5 GiB, swap used ≈0.5 GiB. This is *not* extra Windows-free RAM and does not split usage by distro.
-- **Observed Docker (historical snapshot only):** six containers were running during a software development session. This workload is expected and **not** a blocker or optimization target for the Physical AI setup.
-- **Operating decision:** ERP/ToliHub and Physical AI development will run **sequentially**, not as concurrent heavy workloads. No further Docker memory investigation required. **Install is gated on WSL runtime >=2.4.10 and safe Windows disk headroom**; gracefully complete workloads before shared WSL update. Only disk capacity and WSL CLI compatibility still need minimal installation checks.
-- **Selected target (not installed):** isolated WSL2 distro named `PhysicalAI` with Ubuntu 26.04.1 LTS, ROS 2 Lyrical and Gazebo Jetty. [Installation and switching instructions](docs/infrastructure/WSL2-ON-DEMAND.md).
-- **Measured WSL preflight (2026-10-23):** WSL **2.3.26.0** (kernel 5.15.167.4-1), WSLg **1.0.65**, Windows build **10.0.26200.7623**; `wsl --list --online` does not show `Ubuntu-26.04`. New .wsl image format requires **WSL >=2.4.10**.
-- **Disk free space:** **C: 1.60 GB**, **D: 119.40 GB** (user-provided readings). C: needs more headroom before system-wide WSL update; target install location `D:\\WSL\\PhysicalAI`. Image download also to D:. D: media type unverified.
-- **Public repository**: do not commit secrets, customer information or private operational data.
+- ERP/ToliHub and Physical AI will run **sequentially**, not as two simultaneous heavy workloads.
+- Existing WSL2 global `.wslconfig` was `memory=16GB` and `defaultVhdSize=100GB`; no changes have been requested to it.
+- During robotics work, stop development/CI and Docker workloads **gracefully**; never terminate a database during writes.
+- Keep the development distro and Docker data unchanged; robotics code belongs in the new Linux filesystem, **under `~/` rather than `/mnt/c/`**.
+- Public GitHub repository: no credentials, personal/local IPs, private company data or media.
 
-## Fill in before first sprint
+See [WSL2 on-demand guide](docs/infrastructure/WSL2-ON-DEMAND.md).
 
-- [ ] Actual OS / WSL / GPU / CPU / RAM and disk space
-- [ ] Weekly available time block(s)
-- [ ] Existing robotics knowledge and initial self-assessment
-- [ ] Linux development environment choice and reason
-- [ ] Date/time of first completed lab session
-- [ ] Link to evidence of first running ROS 2 node
+## Verified background relevant to study
 
-## Current open questions
+- CAD / mechanical engineering, full-stack software development, ERP architecture, production and 3D printing.
+- Interest in robot control, ROS 2 and robot learning.
+- No direct evidence of mastery in robotics yet; track with [skill matrix](docs/skills/SKILL_MATRIX.csv).
 
-1. Restore safe C: headroom (8–10 GB as a planning target), then update shared WSL to >=2.4.10 at a safe workload break and verify install flags.
-2. Verify the official Ubuntu 26.04.1 WSL image/checksum before installing to D:.
-2. What robotics hardware, if any, is already available?
-3. What exercise can be independently tested before ROS hardware integration?
+## Next checks
+
+- [x] Download Ubuntu 26.04.1 official WSL image and verify SHA256
+- [x] Install `PhysicalAI` WSL2 distro on D: without modifying original Ubuntu
+- [x] Create an initial Unix account and verify Ubuntu release and Linux filesystem
+- [ ] Confirm `locale`, package manager and start in `~/`
+- [ ] Install ROS 2 Lyrical from official apt repository
+- [ ] Test ROS 2 talker/listener and record evidence
+- [ ] Verify WSLg and RViz before Gazebo
+- [ ] Return to ERP development mode safely and verify the original environment remains functional
+- [ ] Assess actual GPU, other hardware and available study time when relevant
