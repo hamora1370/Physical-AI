@@ -14,9 +14,13 @@
 - ROS 2, RViz and Gazebo **not installed or tested**.
 - A full switch back to ERP mode has not yet been explicitly tested after install; Issue #1 remains open for that final verification.
 
+## ROS 2 apt source verified (2026-10-23)
+
+The user installed `ros2-apt-source` **1.3.0~resolute** inside `PhysicalAI`. `sudo apt update` successfully fetched `packages.ros.org/ros2/ubuntu resolute` package indexes. Six Ubuntu packages were upgradable; this is informational. **ROS desktop itself has not been installed or tested yet.**
+
 ## Next single action
 
-From **PhysicalAI** Linux shell, run `cd ~`; then follow [ROS 2 Lyrical first-install guide](docs/infrastructure/ROS2-LYRICAL-FIRST-BOOT.md) beginning with locale/apt checks, followed by official ROS apt-source setup and `ros-lyrical-desktop` installation.
+Inside **PhysicalAI**, run/review `sudo apt upgrade`, check `apt-cache policy ros-lyrical-desktop`, then install `sudo apt install ros-lyrical-desktop ros-dev-tools`. Verify `source /opt/ros/lyrical/setup.bash`, `echo "$ROS_DISTRO"`, and the two-terminal talker/listener exercise. Document actual outputs and any failed steps in [Issue #2](https://github.com/hamora1370/Physical-AI/issues/2).
 
 **Execution issue:** [#2 ROS 2 installation & talker/listener verification](https://github.com/hamora1370/Physical-AI/issues/2)
 
