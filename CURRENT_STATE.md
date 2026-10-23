@@ -1,8 +1,8 @@
 # Current state — verified workstation setup
 
 **Last updated:** 2026-10-23  
-**Phase:** Y1 / Q1 / Ubuntu installed, ROS 2 pending  
-**Source:** user-provided console transcripts. Physical testing, ROS installation and robotics skills have not yet been verified.
+**Phase:** Y1 / Q1 / ROS 2 initial communication verified  
+**Source:** user-provided console transcripts. ROS 2 CLI and example node communication have been verified; desktop meta-package identity, physical testing and robotics mastery have not.
 
 ## Verified workstation environment
 
@@ -17,7 +17,7 @@
 | Memory inside new distro | ~15 GiB total, ~624 MiB used, ~15 GiB available at first boot |
 | Swap | 4.0 GiB; 0 used on first boot |
 | Linux root virtual filesystem | ~98 GiB capacity, ~1.3 GiB used, ~92 GiB available |
-| ROS 2 | **not installed/verified** |
+| ROS 2 | CLI package discovery verified; C++ talker → Python listener messages 24–34 received in sequence. [Evidence](docs/evidence/2026-10-23-ros2-talker-listener.md). The Lyrical environment was explicitly sourced. Installed metapackage identities still not verified via dpkg. |
 | RViz / Gazebo | **not installed/verified** |
 | Physical robot | **none verified** |
 
@@ -47,8 +47,8 @@ See [WSL2 on-demand guide](docs/infrastructure/WSL2-ON-DEMAND.md).
 - [x] Install `PhysicalAI` WSL2 distro on D: without modifying original Ubuntu
 - [x] Create an initial Unix account and verify Ubuntu release and Linux filesystem
 - [ ] Confirm `locale`, package manager and start in `~/`
-- [ ] Install ROS 2 Lyrical from official apt repository
-- [ ] Test ROS 2 talker/listener and record evidence
+- [x] Install official ROS apt source and verify ROS CLI/package discovery; Lyrical-specific meta-package verification pending
+- [x] Test ROS 2 C++ talker/Python listener and [record evidence](docs/evidence/2026-10-23-ros2-talker-listener.md)
 - [ ] Verify WSLg and RViz before Gazebo
 - [ ] Return to ERP development mode safely and verify the original environment remains functional
 - [ ] Assess actual GPU, other hardware and available study time when relevant
