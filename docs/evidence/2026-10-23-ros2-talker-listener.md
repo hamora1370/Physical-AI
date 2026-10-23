@@ -44,6 +44,30 @@ Subscriber:
 
 The user shared Talker messages numbered 1–59 (with a truncated line for 60) and Listener messages 24–34. All 11 shown listener message numbers appear in the talker trace in the same order. Message intervals are approximately one second; no loss is apparent in **this limited observed span**. The subscriber started receiving after the publisher had already published initial messages, which is normal for this kind of test.
 
+## CLI introspection — PASS (2026-10-23)
+
+The user then ran the following in a second `PhysicalAI` shell while `/talker` was active:
+
+```bash
+source /opt/ros/lyrical/setup.bash
+ros2 node list
+ros2 topic list -t
+ros2 topic echo /chatter --once
+```
+
+Actual user-observed output:
+
+```text
+/talker
+/chatter [example_interfaces/msg/String]
+/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+data: 'Hello World: 23'
+---
+```
+
+**Result: PASS.** CLI discovers `/talker`, shows `/chatter` with actual message type `example_interfaces/msg/String` and receives one `Hello World` sample. `--once` stops the temporary CLI subscriber after one message; it does not stop the talker. Some prior planning text incorrectly expected `std_msgs/msg/String`; the **actual** observed type is `example_interfaces/msg/String` and the docs should match reality.
+
 ## Not yet independently verified
 
 - `echo "$ROS_DISTRO"` returning `lyrical` (commands source Lyrical explicitly, but no echo was posted).
@@ -54,6 +78,6 @@ The user shared Talker messages numbered 1–59 (with a truncated line for 60) a
 ## Next learning check
 
 1. Confirm distro and installed metapackages if needed.
-2. With talker running, inspect `ros2 node list` and `ros2 topic list -t`; use `ros2 topic echo /chatter --once`.
+2. **Completed:** with talker running, inspected `ros2 node list`, `ros2 topic list -t`, and echoed one `/chatter` message.
 3. Independently explain publisher/subscriber/topic and message type, then learn Services and Actions.
 4. Keep this evidence linked from Issue #2; assess skill matrix only after independent exercise.
