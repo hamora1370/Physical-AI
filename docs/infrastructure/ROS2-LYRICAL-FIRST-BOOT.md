@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-23  
 **Target:** Ubuntu 26.04.1 LTS (`resolute`) on dedicated `PhysicalAI` WSL2 distro.  
-**Status as of 2026-10-23:** Step 2 (official ROS apt source) was completed; the user has now shown `ros2 pkg list | head` listing `action_msgs`, `action_tutorials_cpp`, `ament_cmake` and other ROS packages. This **verifies the ROS CLI and package discovery work**, but does not by itself verify the `ros-lyrical-desktop` meta-package or the selected ROS distro, and the talker/listener test is still pending. **Next:** check `echo "$ROS_DISTRO"`, verify the desktop/dev-tools packages if needed, then perform Step 4.
+**Status as of 2026-10-23:** Step 2 (official ROS apt source) completed; ROS CLI/package discovery works. **Step 4 talker/listener smoke test: PASS** — observed C++ talker messages 24–34 matched Python listener messages 24–34. [Evidence](../evidence/2026-10-23-ros2-talker-listener.md). Meta-package identity (`ros-lyrical-desktop`, `ros-dev-tools`) and explicit `echo "$ROS_DISTRO"` output remain to be independently verified. RViz/Gazebo have not been tested.
 
 ## 0. Shell placement and preflight
 
@@ -72,7 +72,7 @@ If both show `install ok installed` and `ROS_DISTRO` is `lyrical`, proceed to St
 
 **Do not automatically append the source line to .bashrc until installation and test pass.** After success, it can be added once with a guarded check.
 
-## 4. Talker/listener smoke test
+## 4. Talker/listener smoke test — PASS (2026-10-23)
 
 Two **different Linux terminals** in the same WSL distro:
 
@@ -88,7 +88,7 @@ source /opt/ros/lyrical/setup.bash
 ros2 run demo_nodes_py listener
 ```
 
-Pass: talker publishes and listener receives numbered messages. Stop each with Ctrl+C.
+**Observed PASS:** both programs ran and the 11 shared subscriber message numbers 24–34 matched the publisher trace, approximately at 1 Hz. See [recorded evidence](../evidence/2026-10-23-ros2-talker-listener.md). This does not prove an independently authored node or any hardware functionality. Stop each program with Ctrl+C after testing.
 
 ## 5. Record evidence
 
