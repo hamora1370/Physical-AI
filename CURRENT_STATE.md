@@ -17,7 +17,7 @@
 | Memory inside new distro | ~15 GiB total, ~624 MiB used, ~15 GiB available at first boot |
 | Swap | 4.0 GiB; 0 used on first boot |
 | Linux root virtual filesystem | ~98 GiB capacity, ~1.3 GiB used, ~92 GiB available |
-| ROS 2 | CLI package discovery verified; C++ talker → Python listener messages 24–34 received in sequence; CLI introspection verified `/talker`, `/chatter [example_interfaces/msg/String]` and received `Hello World: 23` via `ros2 topic echo --once`. [Evidence](docs/evidence/2026-10-23-ros2-talker-listener.md). The Lyrical environment was explicitly sourced. Installed metapackage identities still not verified via dpkg. |
+| ROS 2 | CLI package discovery verified; C++ talker → Python listener messages 24–34 received in sequence; CLI introspection verified `/talker`, `/chatter [example_interfaces/msg/String]` and received `Hello World: 23` via `ros2 topic echo --once`. **Endpoint inspection PASS**: one `talker` publisher; QoS `RELIABLE`, `KEEP_LAST (7)`, `VOLATILE`; `Subscription count: 0` at time of inspection; interface `string data`. [Evidence](docs/evidence/2026-10-23-ros2-talker-listener.md). [Evidence](docs/evidence/2026-10-23-ros2-talker-listener.md). The Lyrical environment was explicitly sourced. Installed metapackage identities still not verified via dpkg. |
 | RViz / Gazebo | **not installed/verified** |
 | Physical robot | **none verified** |
 
