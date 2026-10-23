@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-23  
 **Target:** Ubuntu 26.04.1 LTS (`resolute`) on dedicated `PhysicalAI` WSL2 distro.  
-**Status as of 2026-10-23:** Step 2 (**official ROS apt source**) was completed and verified from the user's terminal output: `ros2-apt-source` version `1.3.0~resolute`, and `apt update` fetched ROS package indexes successfully. **Step 3 (ROS desktop installation) is next, not yet verified.**
+**Status as of 2026-10-23:** Step 2 (official ROS apt source) was completed; the user has now shown `ros2 pkg list | head` listing `action_msgs`, `action_tutorials_cpp`, `ament_cmake` and other ROS packages. This **verifies the ROS CLI and package discovery work**, but does not by itself verify the `ros-lyrical-desktop` meta-package or the selected ROS distro, and the talker/listener test is still pending. **Next:** check `echo "$ROS_DISTRO"`, verify the desktop/dev-tools packages if needed, then perform Step 4.
 
 ## 0. Shell placement and preflight
 
@@ -50,7 +50,7 @@ sudo apt update
 
 If the release version is empty, download returns an error, or the Debian package is not for `resolute`, **stop and inspect** instead of manually adding an unsigned apt source.
 
-## 3. Install ROS desktop and development tools — NEXT (not yet verified)
+## 3. Install ROS desktop and development tools — package discovery verified, package identity confirmation pending
 
 ```bash
 sudo apt install -y ros-lyrical-desktop ros-dev-tools
@@ -60,6 +60,15 @@ ros2 pkg list | head
 ```
 
 The distro should report `lyrical`; the package list should not be empty.
+
+To confirm that the expected packages are actually installed (rather than inferring this solely from a populated ROS package list):
+
+```bash
+echo "$ROS_DISTRO"
+dpkg-query -W -f='${Package} ${Status} ${Version}\n' ros-lyrical-desktop ros-dev-tools
+```
+
+If both show `install ok installed` and `ROS_DISTRO` is `lyrical`, proceed to Step 4. If a package is missing, resolve that first; don't mark the installation complete solely from `ros2 pkg list`.
 
 **Do not automatically append the source line to .bashrc until installation and test pass.** After success, it can be added once with a guarded check.
 
