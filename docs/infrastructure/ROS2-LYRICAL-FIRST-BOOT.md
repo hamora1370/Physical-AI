@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-23  
 **Target:** Ubuntu 26.04.1 LTS (`resolute`) on dedicated `PhysicalAI` WSL2 distro.  
-**Status as of 2026-10-23:** Step 2 (official ROS apt source) completed; ROS CLI/package discovery works. **Step 4 talker/listener smoke test: PASS** — observed C++ talker messages 24–34 matched Python listener messages 24–34. [Evidence](../evidence/2026-10-23-ros2-talker-listener.md). Follow-up CLI introspection also **PASS**: `/talker`, `/chatter [example_interfaces/msg/String]`, and `data: 'Hello World: 23'` from `ros2 topic echo --once`. Meta-package identity (`ros-lyrical-desktop`, `ros-dev-tools`) and explicit `echo "$ROS_DISTRO"` output remain to be independently verified. RViz/Gazebo have not been tested.
+**Status as of 2026-10-23:** Step 2 (official ROS apt source) completed; ROS CLI/package discovery works. **Step 4 talker/listener smoke test: PASS** — observed C++ talker messages 24–34 matched Python listener messages 24–34. [Evidence](../evidence/2026-10-23-ros2-talker-listener.md). Follow-up CLI introspection also **PASS**: `/talker`, `/chatter [example_interfaces/msg/String]`, and `data: 'Hello World: 23'` from `ros2 topic echo --once`. **Topic QoS inspection PASS**: a publisher `talker`, `RELIABLE`, `KEEP_LAST (7)`, `VOLATILE`, `Subscription count: 0` at inspection time, and interface definition `string data`. [Evidence](../evidence/2026-10-23-ros2-talker-listener.md). Meta-package identity (`ros-lyrical-desktop`, `ros-dev-tools`) and explicit `echo "$ROS_DISTRO"` output remain to be independently verified. RViz/Gazebo have not been tested.
 
 ## 0. Shell placement and preflight
 
