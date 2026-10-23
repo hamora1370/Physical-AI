@@ -31,9 +31,9 @@
 - **Observed host (2026-10-23, user-reported PowerShell):** Windows with 31.5 GB installed RAM, 4.2 GB Windows available RAM, WSL2 global `.wslconfig` `memory=16GB` and `defaultVhdSize=100GB`.
 - **Running WSL:** `Ubuntu-24.04` (default) and `docker-desktop`, both running; `vmmemWSL` Windows process working set ≈8.31 GB at snapshot time.
 - **Observed inside WSL:** total ≈15 GiB, Linux `MemAvailable` ≈8.5 GiB, swap used ≈0.5 GiB. This is *not* extra Windows-free RAM and does not split usage by distro.
-- **Observed Docker:** six running containers totaling ≈3.0 GiB of Docker-reported memory; one E2E client ≈1.95 GiB / 127% CPU at snapshot time. These values fluctuate and are not additive to the WSL process working set.
-- **Constraint:** host Windows memory headroom is low; hold new-distro installation while identifying transient test jobs, caches and large host processes. Never interrupt active tests / database writes without confirming they are safe to stop.
-- **Selected target (not installed):** isolated Ubuntu 26.04.1 LTS, ROS 2 Lyrical and Gazebo Jetty. Prefer on-demand distro use.
+- **Observed Docker (historical snapshot only):** six containers were running during a software development session. This workload is expected and **not** a blocker or optimization target for the Physical AI setup.
+- **Operating decision:** ERP/ToliHub and Physical AI development will run **sequentially**, not as concurrent heavy workloads. Proceed with a second, on-demand WSL2 distro; no further Docker memory investigation required. Gracefully complete development tasks and close Docker Desktop before switching modes. Only disk capacity and WSL CLI compatibility still need minimal installation checks.
+- **Selected target (not installed):** isolated WSL2 distro named `PhysicalAI` with Ubuntu 26.04.1 LTS, ROS 2 Lyrical and Gazebo Jetty. [Installation and switching instructions](docs/infrastructure/WSL2-ON-DEMAND.md).
 - **Public repository**: do not commit secrets, customer information or private operational data.
 
 ## Fill in before first sprint
@@ -47,6 +47,6 @@
 
 ## Current open questions
 
-1. What environment is easiest to isolate from the operational ERP stack?
+1. Which existing SSD drive has enough free space for the new distro? Does the installed WSL CLI support `--name`, `--location` and `--no-launch`?
 2. What robotics hardware, if any, is already available?
 3. What exercise can be independently tested before ROS hardware integration?
