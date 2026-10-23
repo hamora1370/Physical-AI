@@ -13,8 +13,12 @@
 ## Chosen target stack (not yet installed)
 Ubuntu 26.04.1 LTS + ROS 2 Lyrical + Gazebo Jetty + MoveIt 2 (Lyrical). Isaac Sim 6.1 lists only Ubuntu 22.04/24.04, so evaluate a secondary compatible environment later.
 
+## Latest resource audit (2026-10-23)
+
+Actual Windows RAM 31.5 GB; available RAM 4.2 GB. Existing `Ubuntu-24.04` and `docker-desktop` running. WSL cap 16 GB, `vmmemWSL` working set 8.31 GB. Six Docker containers ~3.0 GiB by Docker accounting; one test client ~1.95 GiB and 127% CPU. ROS/Ubuntu 26.04 not installed. Full details in [CURRENT_STATE.md](CURRENT_STATE.md) and [Issue #1](https://github.com/hamora1370/Physical-AI/issues/1).
+
 ## Next single action
-Open [Issue #1 — baseline and development environment](https://github.com/hamora1370/Physical-AI/issues/1) and confirm whether the dedicated Linux target is a **native independent machine/installation** or a **separate WSL2 distro**; inventory the actual hardware/storage and update [CURRENT_STATE.md](CURRENT_STATE.md).
+Before creating the new distro, inspect running E2E test/runner status and the top Windows processes using the **read-only commands in Issue #1**; identify which test services can safely stop without interrupting active builds or database writes.
 
 ## Next in sequence
 1. [#1 Baseline / isolated environment](https://github.com/hamora1370/Physical-AI/issues/1) — start here.
