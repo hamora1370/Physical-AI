@@ -36,6 +36,7 @@ This is a learning repository; it is **not** a safety-certified robot controller
 | Area | Source of truth |
 | --- | --- |
 | Long-range direction | [ROADMAP.md](ROADMAP.md) |
+| WSL2 on-demand setup | [PhysicalAI installation and safe switching](docs/infrastructure/WSL2-ON-DEMAND.md) |
 | Current quarter | [Q1 plan](docs/roadmap/Q1-2026-10.md) |
 | Skill coverage & missing prerequisites | [Skill matrix](docs/skills/SKILL_MATRIX.csv) |
 | Evidence & repeatability rules | [Evidence protocol](docs/EVIDENCE_PROTOCOL.md) |
