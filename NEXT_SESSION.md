@@ -10,8 +10,11 @@
 - Starter Issues #1–#5 created.
 - No ROS 2 installation, simulation, physical robot or mastery assessment has been verified.
 
+## Chosen target stack (not yet installed)
+Ubuntu 26.04.1 LTS + ROS 2 Lyrical + Gazebo Jetty + MoveIt 2 (Lyrical). Isaac Sim 6.1 lists only Ubuntu 22.04/24.04, so evaluate a secondary compatible environment later.
+
 ## Next single action
-Open [Issue #1 — baseline and development environment](https://github.com/hamora1370/Physical-AI/issues/1), inventory the actual machine/WSL/Linux resources, and update [CURRENT_STATE.md](CURRENT_STATE.md).
+Open [Issue #1 — baseline and development environment](https://github.com/hamora1370/Physical-AI/issues/1) and confirm whether the dedicated Linux target is a **native independent machine/installation** or a **separate WSL2 distro**; inventory the actual hardware/storage and update [CURRENT_STATE.md](CURRENT_STATE.md).
 
 ## Next in sequence
 1. [#1 Baseline / isolated environment](https://github.com/hamora1370/Physical-AI/issues/1) — start here.
