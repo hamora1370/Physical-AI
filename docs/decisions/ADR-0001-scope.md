@@ -13,7 +13,7 @@ Five-year learning plan must coexist with existing ERP and manufacturing busines
 3. Use GitHub Issues for near-term execution; detailed planning only one quarter ahead.
 4. Favor low-cost simulation and small safe educational hardware before purchasing industrial equipment.
 5. Separate high-level business commands and policy inference from deterministic robot control and independent safety functions.
-6. Review platform/version choices before installation; treat future model names as replaceable.
+6. Select **Ubuntu 26.04.1 LTS + ROS 2 Lyrical + Gazebo Jetty** as the *target stack* for an isolated robotics environment, pending a workstation/installation audit; treat later models and versions as replaceable. MoveIt 2 binaries are available for Lyrical. NVIDIA Isaac Sim 6.1 supports Ubuntu 22.04/24.04 on Linux, not 26.04, so its installation must remain a separately validated future decision.
 7. Do not commit company-sensitive assets to this public repository.
 
 ## Consequences
