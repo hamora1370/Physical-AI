@@ -5,7 +5,9 @@ Use primary documentation and one main course at a time. These URLs are entry po
 | Domain | Source | When |
 |---|---|---|
 | Robot math | https://modernrobotics.org/ | Y1 |
-| ROS 2 tutorials (Jazzy) | https://docs.ros.org/en/jazzy/Tutorials.html | Y1 |
+| ROS 2 tutorials (Lyrical) | https://docs.ros.org/en/lyrical/Tutorials.html | Y1 |
+| Gazebo Jetty + Lyrical pairing | https://gazebosim.org/docs/jetty/ros_installation/ | Y1 |
+| MoveIt binary for Lyrical | https://moveit.ai/install-moveit2/binary/ | Y1 |
 | Gazebo | https://gazebosim.org/docs | Y1 |
 | MoveIt 2 | https://moveit.picknik.ai/ | Y1 |
 | ROS controls | https://control.ros.org/ | Y1 |
