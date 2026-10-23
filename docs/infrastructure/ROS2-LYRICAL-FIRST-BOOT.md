@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-23  
 **Target:** Ubuntu 26.04.1 LTS (`resolute`) on dedicated `PhysicalAI` WSL2 distro.  
-**Status:** **instructions only** — ROS has NOT been installed or tested yet.
+**Status as of 2026-10-23:** Step 2 (**official ROS apt source**) was completed and verified from the user's terminal output: `ros2-apt-source` version `1.3.0~resolute`, and `apt update` fetched ROS package indexes successfully. **Step 3 (ROS desktop installation) is next, not yet verified.**
 
 ## 0. Shell placement and preflight
 
@@ -50,7 +50,7 @@ sudo apt update
 
 If the release version is empty, download returns an error, or the Debian package is not for `resolute`, **stop and inspect** instead of manually adding an unsigned apt source.
 
-## 3. Install ROS desktop and development tools
+## 3. Install ROS desktop and development tools — NEXT (not yet verified)
 
 ```bash
 sudo apt install -y ros-lyrical-desktop ros-dev-tools
