@@ -2,11 +2,11 @@
 
 **Updated:** 2026-10-26  
 **Track:** Y1 / Q1 / official Week 1 (2026-10-26 → 2026-11-01)  
-**Current engineering project:** **SCARA-01**, a desktop low-energy 3-positioning-DOF R-R-P robot intended first for tray-to-tray transport of small 3D-printed parts.
+**Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
 
 ## Decision made 2026-10-26
 
-The learner approved switching Q1 to a **project-centered integrated robotics curriculum**, rather than separating ROS/software tools from mechanical, mathematical and control engineering. The single robot is the common thread: concept → requirements → 2R FK/IK → mechanical/actuator design → sensing/control → RRP path → ROS model/simulation → review.
+The learner approved switching Q1 to a **project-centered integrated robotics curriculum**, rather than separating ROS/software tools from mechanical, mathematical and control engineering. The single robot is the common thread: concept → requirements for a printable compact R-R-P-R and gripper → 2R FK/IK → mechanical/actuator design → sensing/control → RRP path → ROS model/simulation → review.
 
 - [SCARA-01 concept/requirements hypotheses](docs/projects/SCARA-01-CONCEPT.md)
 - [Live Q1 13-week learning plan and updated Week 1](docs/roadmap/Q1-2026-10.md)
@@ -15,7 +15,7 @@ The learner approved switching Q1 to a **project-centered integrated robotics cu
 
 ## Next **single** teaching action
 
-**SCARA-01 requirements workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2 and the prismatic Z joint, then distinguish gripper opening from positional DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional `L1=180 mm`, `L2=140 mm`. Ask for engineering justification of tray size/placement, part dimensions/mass, tool selection, Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
+**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, yaw vs flipping requirement, Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
 
 **Teaching style:** explain one concept deeply, connect it to this SCARA task, then do a small calculation and comprehension check before another topic. Do not rush toward CAD purchase/Gazebo.
 
@@ -28,7 +28,7 @@ The learner approved switching Q1 to a **project-centered integrated robotics cu
 
 ## Q1 definition of done
 
-Reliable conceptual and numerical understanding with evidence; a tested 2R FK/IK, initial sizing tradeoffs, documented RRP robot model and reproducible simulated pick/place sequence (or explicit simulator limitations/fallback). **Low-energy guarded physical 2R prototype is a stretch**, not an automatic requirement of ~65 study hours. Full 3-axis physical integration can extend to Q2.
+Reliable conceptual and numerical understanding with evidence; a tested 2R FK/IK, initial sizing tradeoffs, documented R-R-P motion model plus wrist-yaw relation (J4 simulation when feasible), and reproducible simulated pick/place sequence (or explicit simulator limitations/fallback). **Low-energy guarded physical 2R prototype is a stretch**, not an automatic requirement of ~65 study hours. Full four-axis and gripper physical integration can extend to Q2.
 
 ## Remaining verification / limitations
 
