@@ -16,6 +16,7 @@
 ## New study progress — reported 2026-10-26, assessment pending
 
 - Conceptual teaching delivered: Node/Process/Thread/Executor and Callback Groups; Concurrency vs Parallelism; Python client library vs C++, JavaScript and Rust; Topic names and introductory tf2 timestamp/latency.
+- **Additional prior learning overlooked in earlier weekly status (2026-10-24):** introductory Forward Kinematics, Base/Wrist/Tool coordinate frames, 2-D rigid translation/rotation composition, frame chaining `^B T_T = ^B T_W * ^W T_T`, and the effect of rotating a parent frame. The learner correctly solved conceptual examples and asked not to continue the FK lesson for now. **Do not repeat the introductory FK instruction in the next session.** No independent planar 2R implementation or automated numerical tests have been checked; keep formal FK implementation at Q1 Weeks 5–6 / [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3).
 - The learner said **all proposed practical exercises were done**, including `executor_lab.py` modes `single`, `multi-default`, `multi-groups`, `--work cpu` vs `--work sleep`, and `vision-only`/`control-only` in different processes.
 - These are **self-reported completed exercises**. No measured intervals, saved terminal output or independent conceptual explanation has been provided and evaluated; do not mark a skill mastery level or timing benchmark as validated.
 
