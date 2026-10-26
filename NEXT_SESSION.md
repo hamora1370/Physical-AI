@@ -2,46 +2,42 @@
 
 **Updated:** 2026-10-26  
 **Track:** Y1 / Q1 / official Week 1 (2026-10-26 → 2026-11-01)  
-**Status:** ROS 2 initial communication/CLI introspection are evidenced; learner reports completing the Executor/Concurrency/Process exercises. Their logs and learning mastery have **not yet been independently reviewed**.
+**Current engineering project:** **SCARA-01**, a desktop low-energy 3-positioning-DOF R-R-P robot intended first for tray-to-tray transport of small 3D-printed parts.
 
-## Last independently evidenced technical state
+## Decision made 2026-10-26
 
-- WSL2 distro `PhysicalAI`: Ubuntu 26.04.1 LTS on D:; existing `Ubuntu-24.04` ERP distro preserved and default.
-- ROS 2 Lyrical example communication PASS: C++ Talker publishes to `/chatter`; Python Listener receives matching numbered messages.
-- CLI evidence: `ros2 node list`, `ros2 topic list -t`, `ros2 topic echo /chatter --once`, `ros2 topic info /chatter -v` and `ros2 interface show example_interfaces/msg/String`.
-- Actual demo message type: **`example_interfaces/msg/String`**, not `std_msgs/msg/String`.
-- Observed publisher QoS: `RELIABLE`, `KEEP_LAST(7)`, `VOLATILE`; subscription count was 0 **at the time of the inspection**, not a failure.
-- [Saved evidence](docs/evidence/2026-10-23-ros2-talker-listener.md).
+The learner approved switching Q1 to a **project-centered integrated robotics curriculum**, rather than separating ROS/software tools from mechanical, mathematical and control engineering. The single robot is the common thread: concept → requirements → 2R FK/IK → mechanical/actuator design → sensing/control → RRP path → ROS model/simulation → review.
 
-## New study progress — reported 2026-10-26, assessment pending
+- [SCARA-01 concept/requirements hypotheses](docs/projects/SCARA-01-CONCEPT.md)
+- [Live Q1 13-week learning plan and updated Week 1](docs/roadmap/Q1-2026-10.md)
+- [Active design requirements task #6](https://github.com/hamora1370/Physical-AI/issues/6)
+- [Q1 milestone #5](https://github.com/hamora1370/Physical-AI/issues/5)
 
-- Conceptual teaching delivered: Node/Process/Thread/Executor and Callback Groups; Concurrency vs Parallelism; Python client library vs C++, JavaScript and Rust; Topic names and introductory tf2 timestamp/latency.
-- **Additional prior learning overlooked in earlier weekly status (2026-10-24):** introductory Forward Kinematics, Base/Wrist/Tool coordinate frames, 2-D rigid translation/rotation composition, frame chaining `^B T_T = ^B T_W * ^W T_T`, and the effect of rotating a parent frame. The learner correctly solved conceptual examples and asked not to continue the FK lesson for now. **Do not repeat the introductory FK instruction in the next session.** No independent planar 2R implementation or automated numerical tests have been checked; keep formal FK implementation at Q1 Weeks 5–6 / [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3).
-- The learner said **all proposed practical exercises were done**, including `executor_lab.py` modes `single`, `multi-default`, `multi-groups`, `--work cpu` vs `--work sleep`, and `vision-only`/`control-only` in different processes.
-- These are **self-reported completed exercises**. No measured intervals, saved terminal output or independent conceptual explanation has been provided and evaluated; do not mark a skill mastery level or timing benchmark as validated.
+## Next **single** teaching action
 
-## Next single teaching action
+**SCARA-01 requirements workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2 and the prismatic Z joint, then distinguish gripper opening from positional DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional `L1=180 mm`, `L2=140 mm`. Ask for engineering justification of tray size/placement, part dimensions/mass, tool selection, Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
 
-**Debrief completed Executor labs, then introduce Scheduling/Jitter/Deadline.** Ask the learner to describe the most important observed difference between `multi-default` and `multi-groups` (or provide a few representative `CONTROL interval` lines, if available). Explain the cause in terms of Callback Group and Executor behavior. Separately distinguish event-loop concurrency from CPU parallelism. Do **not** request a rerun merely to tick a box.
+**Teaching style:** explain one concept deeply, connect it to this SCARA task, then do a small calculation and comprehension check before another topic. Do not rush toward CAD purchase/Gazebo.
 
-Once the conceptual distinction is clear, run one *new* measured ROS 2 Timer experiment under an idle and blocked callback scenario. Capture mean/max/p95 interval where possible, then return to tf2 timestamp correctness and transform freshness.
+## Evidence carried from earlier sessions — avoid repetition
 
-## This week's plan and completion gates
+- **Verified via 2026-10-23 user logs:** `PhysicalAI` distro Ubuntu 26.04.1 WSL2, ROS 2 Lyrical initial communication; C++ Talker / Python Listener exchanged numbered `/chatter` messages of type `example_interfaces/msg/String`. `ros2 topic info -v` showed RELIABLE, KEEP_LAST(7), VOLATILE. [Saved log](docs/evidence/2026-10-23-ros2-talker-listener.md).
+- **Introduced and conceptually practiced (2026-10-24):** Base/Wrist/Tool frames, translation/rotation, homogeneous transformations, introductory FK, 2D coordinate problems (correct learner answers). A new SCARA FK/IK derivation and code tests are still needed; do not re-teach the generic intro.
+- **Learner-reported completed (2026-10-26):** `executor_lab.py` `single`, `multi-default`, `multi-groups`, CPU/sleep modes and separate Process experiments. **No output or timing distributions independently assessed**; discuss only when needed for SCARA timing.
+- **Discussed/not yet mastery-assessed:** Node/Topic/Publisher/Subscriber, Process/Thread/Executor, Concurrency/Parallelism, language bindings (Python, C++, Rust, JavaScript), QoS, tf2 timestamp/latency basics.
 
-See the live [official Week 1 adaptive schedule](docs/roadmap/Q1-2026-10.md#week-1-adaptive-study-plan-2026-10-26-to-2026-11-01-updated-2026-10-26) (five focused hours, no pressure to advance before understanding).
+## Q1 definition of done
 
-In order: results interpretation → Scheduling/Jitter/Deadline → measured Timer intervals → Topic discovery/QoS → tf2 timing diagnostic and short reflection. Defer deeper Services/Actions, independent authored ROS node and simulation until the present concepts are assessed.
+Reliable conceptual and numerical understanding with evidence; a tested 2R FK/IK, initial sizing tradeoffs, documented RRP robot model and reproducible simulated pick/place sequence (or explicit simulator limitations/fallback). **Low-energy guarded physical 2R prototype is a stretch**, not an automatic requirement of ~65 study hours. Full 3-axis physical integration can extend to Q2.
 
-## Outstanding verification (do not mislabel as PASS)
+## Remaining verification / limitations
 
-- `echo "$ROS_DISTRO"` and metapackage status of `ros-lyrical-desktop` / `ros-dev-tools`.
-- Repo tests `python -m unittest discover -s tests -v`, an independently written ROS 2 Node, and Services/Actions work (tracked in [Issue #2](https://github.com/hamora1370/Physical-AI/issues/2)).
-- Safe return from robotics to ERP workflow ([Issue #1](https://github.com/hamora1370/Physical-AI/issues/1)).
-- RViz/Gazebo, physical robots, and stronger skill levels are not confirmed.
+- ROS 2 `ROS_DISTRO` and meta-package installation checks; WSLg/RViz/Gazebo not yet verified.
+- No independent 2R FK/IK implementation or numeric tests verified; [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3) applies to SCARA 2R subchain.
+- No SCARA CAD, purchased hardware, motion test, physical robot or production cell has been demonstrated.
+- Safe return to ERP Linux workflow remains outstanding. Maintain sequential heavy-use of ERP/ToliHub and robotics environments.
+- Learning mastery requires demonstration; `L0` in skill matrix is unassessed, not inability.
 
 ## Working rules
 
-- Teach **concept → industrial use → implementation details → targeted experiment → comprehension assessment**.
-- Maintain the roughly **5 hours/week** study budget and the two-active-work-item limit. Run ERP/ToliHub and robotics heavy workloads sequentially, not simultaneously.
-- GitHub is a record of meaningful progress, not an interrupt for every command. Keep separate statuses for *taught*, *learner-reported run*, *observed/reproducible* and *demonstrated understanding*.
-- Public repository: do not add private enterprise data, credentials, personal IPs or restricted recordings.
+~5 focused hours/week, roughly 2h engineering theory, 2h calculation/build/code, 1h reflection. At most one theory and one implementation issue active. GitHub is an evidence register, not a source of excessive bookkeeping. No secret credentials or customer-specific material in this public repository.
