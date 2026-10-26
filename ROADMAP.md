@@ -7,7 +7,7 @@
 
 | Year | Weekly guide | Objective | Evidence-based exit gate |
 |---|---:|---|---|
-| Y1 2026–27 | 5 h | Robotics fundamentals, ROS 2, classical manipulation | Independently derive/test FK & IK; simulated pick-and-place; initial low-power robot demo |
+| Y1 2026–27 | 5 h | SCARA-01 compact robot foundations: mechanics, ROS 2, classical manipulation **and learning-ready feedback/data design** | Independently derive/test FK & IK; simulated pick-and-place; measured-state/episode interface design, optional low-power demo |
 | Y2 2027–28 | 5 h | Perception & robot learning | Train/evaluate imitation policy on held-out scenes; compare against classical baseline |
 | Y3 2028–29 | 8 h, if feasible | VLA, sim-to-real, industrial orchestration | End-to-end work order → safe cell action → verifiable result |
 | Y4 2029–30 | 10 h, if feasible | Robust autonomy, contact-rich tasks, recovery | Controlled extended runs, intervention/failure analysis, recovery and uncertainty handling |
@@ -43,5 +43,6 @@ See [skills matrix](docs/skills/SKILL_MATRIX.csv) for topic ownership, prerequis
 - Avoid committing confidential ERP internals or private business/customer data in this **public** repository.
 - Future tools/models are reviewed each quarter, not hardcoded into five-year commitments.
 - Important strategic change requires an ADR under `docs/decisions/` and updates to this document.
+- **Accepted 2026-10-26:** [ADR-0002](docs/decisions/ADR-0002-scara-learning-platform.md) selects [SCARA-01](docs/projects/SCARA-01-CONCEPT.md) as an [observable, data-ready Robot Learning Platform](docs/projects/SCARA-01-LEARNING-PLATFORM.md). Q1 protects future encoder/gripper feedback, ROS 2 command/observation contracts, timestamped episodes, camera provision, simulation/hardware parity and independent safety. The goal is **design readiness now; instrumented hardware later; learned policies in Y2+**, not an additional Q1 neural-network deliverable.
 
 **Next:** [Y1 plan](docs/roadmap/Y1-2026-2027.md), [Q1 plan](docs/roadmap/Q1-2026-10.md).
