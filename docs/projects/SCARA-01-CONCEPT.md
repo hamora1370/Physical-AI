@@ -19,7 +19,7 @@ Proposed **four axis** SCARA form (**R-R-P-R**) for 3-D tool position plus in-pl
 - **J4:** revolute wrist/tool axis around the vertical Z direction, to adjust the part's **yaw angle independently** while maintaining its intended X-Y-Z position. Check physical travel/cable constraints before specifying joint range.
 - **End effector:** a compact, light, **3-D-printable, two-parallel-jaw gripper** is the preferred baseline. Gripper open/close is one additional actuator and is not another independently controlled pose degree of freedom. Explore servo-driven printed rack-and-pinion / linkage mechanisms; final selection requires gripping-force, jaw-travel and backlash review.
 
-The first two rotary axes form a planar 2R subproblem; adding Z and wrist yaw produces a four-DOF R-R-P-R SCARA-like model. **Tool yaw is not tool roll/pitch**: this robot cannot flip a part over without a further wrist/fixture mechanism. Whether the learner also needs flipping is an **open requirements question**. A compact printed-link robot does not imply industrial positioning accuracy.
+The first two rotary axes form a planar 2R subproblem; adding Z and wrist yaw produces a four-DOF R-R-P-R SCARA-like model. **Tool yaw is not tool roll/pitch**: this robot cannot flip a part over without a further wrist/fixture mechanism. **The learner confirmed that yaw about vertical Z is the only part-rotation capability required for the initial version**; part flipping/roll/pitch is out of scope. A compact printed-link robot does not imply industrial positioning accuracy.
 
 ### Geometric model — proposed frame convention
 
@@ -29,7 +29,8 @@ Define the planar base origin at J1, X-Y horizontal, positive Z up, positive joi
 x = L1*cos(q1) + L2*cos(q1+q2)
 y = L1*sin(q1) + L2*sin(q1+q2)
 z = z_ref + q3                 # sign, offsets and stroke to be finalized
-yaw = q1 + q2 + q4             # with independent wrist yaw, subject to sign/frame conventions
+yaw = q1 + q2 + q4             # commanded absolute tool yaw in base XY, subject to frame conventions
+q4  = desired_yaw - q1 - q2   # wrist command, provided joint limits allow it
 ```
 
 For inverse kinematics of the X-Y target, check reachability and joint limits before selecting an elbow branch. The ideal geometric radial envelope is `abs(L1-L2) <= r <= L1+L2`; mechanical stops, self-collision, end-effector offsets, cable routing and clearances reduce the usable workspace. With the *new smaller* candidate `L1=130 mm`, `L2=110 mm`, the ideal annulus is `20 mm <= r <= 240 mm`, **not guaranteed usable**. Previously discussed points `(200,0)` and `(160,200)` are no longer both inside this ideal envelope: the second has radius about `256.1 mm` and must be moved or the geometry revised.
@@ -55,11 +56,11 @@ tf2 and URDF frames will use one documented, tested joint/frame convention; meas
 ## Learner-driven compact/printable requirements (2026-10-26)
 
 - **Confirmed preference:** a compact benchtop robot with **both arm covers and, preferably, both structural links 3-D printable**, plus a gripper that can be FFF printed. The learner has access to a Creality K2 Plus printer with nominal 320 x 320 x 320 mm build volume; fit each individual manufactured component within that envelope after orientation, support and tolerances are considered. **Do not confuse part fit with overall robot swept-envelope size.**
-- **Requested manipulation capability:** rotate the held part. For the SCARA baseline interpret this as adjustable **yaw about vertical Z**; clarify whether flipping/tilting is also needed before declaring the orientation requirement complete.
+- **Confirmed manipulation requirement (2026-10-26):** independently rotate the held part in the **horizontal plane (yaw about vertical Z)** at a selected X-Y-Z location. J4 wrist rotation is a required axis of the chosen SCARA-01 concept, **not a hypothetical future feature**. No flip, tilt, roll or pitch capability is needed for version 1. The actual allowable wrist rotation range and repeatability remain to be engineered.
 - **Print/assembly approach:** prioritize a printed two-parallel-jaw mechanism, potentially rack/pinion or linkage driven by a compact servo, with replaceable contact pads. Bearings, guide rods, shafts, heat-set inserts, metal bolts and appropriate transmissions remain nonprinted where required. The gripper's actual force and stroke must be tested with representative printed parts.
 - **Design consequences:** smaller arm and lighter wrist reduce lever-arm loading but restrict tray positions. Add a wrist-yaw joint without routing cables through unlimited rotation; initial travel limits will be determined by wiring and mechanical stops. Relocating heavy actuators toward the base is a tradeoff to evaluate, not a predetermined design.
 - **Printable structural parts:** start with engineering review of PETG/ASA, layer orientation, stiffness, creep and gear wear; do not state final material, wall count, infill or load rating without tests. Avoid using FFF plastic as an unverified substitute for shafts/bearings or high-wear slide rails.
-- **Open requirements:** smallest/largest representative printed part dimensions, tray arrangement, whether yaw alone suffices, required repeatability and allowable assembly footprint. Accuracy, repeatability, payload and actual tool mass are still unmeasured.
+- **Open requirements:** smallest/largest representative printed part dimensions, tray arrangement, required wrist-yaw travel and repeatability, required position repeatability and allowable assembly footprint. Accuracy, repeatability, payload and actual tool mass are still unmeasured.
 
 ## Engineering questions to answer before CAD freeze
 
@@ -77,7 +78,7 @@ tf2 and URDF frames will use one documented, tested joint/frame convention; meas
 - **Mechanical:** parametric CAD, printable J1/J2 links and covers sized for available K2 Plus printer, printable gripper with mechanical bearing/shaft hardware, possible printed rack/pinion, support/alignment, motor location, belt/reduction backlash, inserts, fasteners and iterative test coupons. Start with PETG/ASA candidate material trials; select structural polymer and wall/print orientation only after stiffness/load/temperature testing.
 - **Embedded/control:** homing, soft/hard travel limits, local position/velocity control, trajectory execution, watchdog and fault handling; hardware-level stop independent of ROS 2.
 - **ROS 2:** state reporting, high-level move requests, robot model, tf2, logging, simulation and orchestration. ROS 2 timer/Executor behavior is analyzed in the context of measured motion scheduling rather than as an isolated software goal.
-- **Future:** camera calibration/vision, closed-loop pick verification, operation tracking/ERP integration; a roll/pitch wrist or part-flipping fixture remains optional pending the actual manipulation task.
+- **Future:** camera calibration/vision, closed-loop pick verification, operation tracking/ERP integration. Part flipping/roll/pitch is explicitly out of the initial task scope; reconsider only if a future application demands it.
 
 ## Q1 learning/demo gates (2026-10-26 to 2027-01-24)
 
