@@ -17,7 +17,7 @@ This is a learning repository; it is **not** a safety-certified robot controller
 1. Read [the five-year roadmap](ROADMAP.md) and [year-one plan](docs/roadmap/Y1-2026-2027.md).
 2. Read [how this system operates](docs/LEARNING_SYSTEM.md).
 3. Complete [CURRENT_STATE.md](CURRENT_STATE.md); **unknown** means not yet assessed, not unskilled.
-4. Open [the current 13-week SCARA-01 project plan](docs/roadmap/Q1-2026-10.md) and [SCARA-01 engineering concept](docs/projects/SCARA-01-CONCEPT.md).
+4. Open [the current 13-week SCARA-01 project plan](docs/roadmap/Q1-2026-10.md), [SCARA-01 engineering concept](docs/projects/SCARA-01-CONCEPT.md), and [robot-learning requirements](docs/projects/SCARA-01-LEARNING-PLATFORM.md).
 5. Open [NEXT_SESSION.md](NEXT_SESSION.md) at the start/end of every session.
 6. Follow [the Q1 milestone (#5)](https://github.com/hamora1370/Physical-AI/issues/5); start from [Issue #1](https://github.com/hamora1370/Physical-AI/issues/1). Use Issues for tasks, PRs for significant updates, and tracked experiments for evidence.
 
@@ -39,6 +39,7 @@ This is a learning repository; it is **not** a safety-certified robot controller
 | WSL2 on-demand setup | [PhysicalAI installation and safe switching](docs/infrastructure/WSL2-ON-DEMAND.md) |
 | Current quarter | [Q1 SCARA-01 plan](docs/roadmap/Q1-2026-10.md) | 
 | Anchor robot engineering project | [SCARA-01 concept and design gates](docs/projects/SCARA-01-CONCEPT.md) |
+| Future robot-learning readiness | [Command, state, gripper feedback, data contract](docs/projects/SCARA-01-LEARNING-PLATFORM.md) · [ADR-0002](docs/decisions/ADR-0002-scara-learning-platform.md) |
 | Skill coverage & missing prerequisites | [Skill matrix](docs/skills/SKILL_MATRIX.csv) |
 | Evidence & repeatability rules | [Evidence protocol](docs/EVIDENCE_PROTOCOL.md) |
 | Learning notes | [Note template](docs/templates/LEARNING_NOTE.md) |
@@ -67,7 +68,7 @@ references/      curated resources
 
 ## First checkpoint
 
-**2027-01-24:** SCARA-01 engineering requirements and design, independently verified FK/IK, a reproducible **simulated R-R-P pick-and-place** workflow (or a recorded simulation blocker with reproducible fallback) and a Q1 review. Physical 2R prototyping is an optional stretch; safe staged four-axis/gripper physical integration can continue in Q2. Dates remain planning targets; mastery gates take precedence.
+**2027-01-24:** SCARA-01 engineering requirements and design including learning-ready measured-state/episode interface choices, independently verified FK/IK, a reproducible **simulated R-R-P pick-and-place** workflow (or a recorded simulation blocker with reproducible fallback) and a Q1 review. Physical 2R prototyping is an optional stretch; safe staged four-axis/gripper physical integration can continue in Q2. Dates remain planning targets; mastery gates take precedence.
 
 ## Privacy and licensing
 
