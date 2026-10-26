@@ -15,9 +15,11 @@ The learner approved switching Q1 to a **project-centered integrated robotics cu
 
 ## Next **single** teaching action
 
-**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, yaw vs flipping requirement, Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
+**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, required J4 horizontal yaw (flipping explicitly not needed), Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
 
 **Teaching style:** explain one concept deeply, connect it to this SCARA task, then do a small calculation and comprehension check before another topic. Do not rush toward CAD purchase/Gazebo.
+
+**Confirmed by learner:** part rotation means horizontal-plane **yaw only**, not flipping, tilting, roll or pitch. J4 is part of the target architecture; physical angular travel, repeatability, motor, wiring and stops are open engineering decisions.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
