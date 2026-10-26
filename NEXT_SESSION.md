@@ -14,13 +14,17 @@ The learner approved switching Q1 to a **project-centered integrated robotics cu
 - [Active design requirements task #6](https://github.com/hamora1370/Physical-AI/issues/6)
 - [Q1 milestone #5](https://github.com/hamora1370/Physical-AI/issues/5)
 
+## Teaching-pacing decision — confirmed 2026-10-26
+
+The learner questioned over-investing class time in contact-friction and gripper-force equations before essential robot motion and Physical AI foundations. **Agreed:** mechanical sizing remains necessary for building the printed gripper, but move detailed gripper motor/rack/gear torque and material calculations to the **Week 5–6 hardware engineering stage**. For now teach task space, joint space, robot kinematics, trajectories, controller feedback and eventually robot-learning interfaces through SCARA-01. Avoid drifting into general software tutorials or multi-concept lectures; one concept, one meaningful check.
+
+**Already discussed conceptually:** SCARA R-R-P-R and 4 pose DOF, independent horizontal yaw, compact printed two-jaw gripper, candidate 130/110 mm links (20–240 mm ideal unconstrained annulus), joint/link collision and Z transfer clearance; preliminary 40×30×30 mm / 100 g reference part and ~50 mm gripper opening are **not confirmed user requirements**; basic force/friction relation and `mu` halving implies required normal force doubling. Do not certify design or hardware mastery based on these conversations.
+
 ## Next **single** teaching action
 
-**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, required J4 horizontal yaw (flipping explicitly not needed), Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0. **Also log future-learning provisions**: how to observe real J1/J2/Z/J4 state and gripper aperture, where a future camera can mount, and what ROS 2/episode data interface is expected. Do not choose motor models or train policies yet.
+**Begin SCARA-01's motion architecture: task space vs joint space.** Present a single conceptual goal, for instance tool center `(x=120 mm, y=60 mm, z=50 mm)`, tool `yaw=90°` relative to the base; coordinates are a *teaching example*, not validated workcell points. Explain the distinction between specifying a tool pose vs ordering motors to specific angles, and the need for inverse kinematics. Invite the learner to reason whether a pose has one or multiple joint configurations and what additional criteria choose a solution. Follow with goal → IK → feasible trajectory → local controller → measured feedback (not simply a direct motor command). Do **not** start by deriving the full analytic IK or writing a long ROS software stack. Formal tests in [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3) come as comprehension develops.
 
-**Teaching style:** explain one concept deeply, connect it to this SCARA task, then do a small calculation and comprehension check before another topic. Do not rush toward CAD purchase/Gazebo.
-
-**Confirmed by learner:** part rotation means horizontal-plane **yaw only**, not flipping, tilting, roll or pitch. J4 is part of the target architecture; physical angular travel, repeatability, motor, wiring and stops are open engineering decisions.
+**Out-of-scope for this teaching step:** more friction/gripper sizing, motor purchase, rack torque, exact printed-wall parameters, independent policy/VLA training, simulator procurement. Actual tray geometry, part dimensions/mass, jaw force and achievable positioning precision remain unconfirmed requirements [Issue #6](https://github.com/hamora1370/Physical-AI/issues/6).
 
 ## Evidence carried from earlier sessions — avoid repetition
 
