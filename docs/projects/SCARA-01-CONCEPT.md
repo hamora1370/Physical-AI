@@ -2,7 +2,7 @@
 
 **Status:** educational design baseline; on 2026-10-26 the learner requested a compact **mostly FFF-printable** machine, an FFF-printable gripper and ability to rotate the part. **No dimensions, performance, CAD, parts or hardware have been validated.**
 
-**Role in Physical AI:** one shared robot for teaching coordinate frames, kinematics, mechanisms, actuator sizing, sensing, feedback, motion planning, ROS 2, simulation and eventually reliable practical automation. Teach each concept when it solves a concrete SCARA-01 problem; do not reduce the course to either software tooling or pure theory.
+**Role in Physical AI:** one shared **robot-learning-ready** platform for teaching coordinate frames, kinematics, mechanisms, actuator sizing, sensing, feedback, motion planning, ROS 2, simulation, time-aligned data collection and (later) controlled policy learning, before reliable practical automation. Teach each concept when it solves a concrete SCARA-01 problem; do not reduce the course to either software tooling or pure theory.
 
 ## Intended first use case
 
@@ -51,7 +51,7 @@ tf2 and URDF frames will use one documented, tested joint/frame convention; meas
 | Performance | accuracy, repeatability, speed, cycle time **TBD** | define test method and safe measured acceptance threshold |
 | Control | independent low-level motor controller plus ROS 2 on host | responsibilities, loss-of-comms response and position feedback |
 
-**No purchasing or definitive CAD dimensions** before workspace, payload, precision and actuator tradeoffs are documented. Vision camera and ERP connectivity are out of Q1 mandatory scope.
+**No purchasing or definitive CAD dimensions** before workspace, payload, precision and actuator tradeoffs are documented. Vision camera, AI training and ERP connectivity are out of Q1 mandatory scope. Reserve the sensor/feedback, logging, camera-mount and cable provisions described in [SCARA-01 learning-platform requirements](SCARA-01-LEARNING-PLATFORM.md).
 
 ## Learner-driven compact/printable requirements (2026-10-26)
 
@@ -62,6 +62,27 @@ tf2 and URDF frames will use one documented, tested joint/frame convention; meas
 - **Printable structural parts:** start with engineering review of PETG/ASA, layer orientation, stiffness, creep and gear wear; do not state final material, wall count, infill or load rating without tests. Avoid using FFF plastic as an unverified substitute for shafts/bearings or high-wear slide rails.
 - **Open requirements:** smallest/largest representative printed part dimensions, tray arrangement, required wrist-yaw travel and repeatability, required position repeatability and allowable assembly footprint. Accuracy, repeatability, payload and actual tool mass are still unmeasured.
 
+## Physical-AI-readiness requirements — approved 2026-10-26
+
+**Approved project role:** this is not merely a scripted pick/place machine; it is a future **Robot Learning Platform**. These requirements must influence actuator, encoder, gripper, camera, wiring, embedded-controller and ROS 2 choices **before** purchasing components or freezing the CAD. All are **planned**, none independently implemented.
+
+1. **Real joint observations:** J1/J2/Z/J4 should provide measured position or a clearly justified and qualified estimate, with calibration and homing status. Commands must never be mislabeled as measured state.
+2. **Replayable, timestamped data:** log measured state, requested/applied actions, gripper aperture/status, failures and later camera frames in coherent, versioned motion episodes. Document clock source and alignment uncertainty.
+3. **ROS 2 command/state interface:** a stable, unit-aware interface for robot actions and observations, with a separate low-level controller enforcing joint limits, motor control, watchdog and safe fault behavior.
+4. **Observable printed gripper:** provide at least an aperture/status observation and reserve the option of sensing grasp success/slip. A close command alone does not establish that a part is held.
+5. **Digital/physical model correspondence:** preserve axes, joint names/order, limits, tool geometry, frame conventions and calibration IDs consistently across CAD, FK/IK, URDF/simulation and later hardware.
+6. **Camera-ready, not camera-dependent in Q1:** reserve unobstructed mounting/cable space for later visual perception and hand–eye / camera-to-base calibration. Keep camera and neural-policy training outside mandatory Q1 scope.
+7. **Independent safety and authority boundary:** AI/ROS must not bypass local motion limits, watchdog, physical protection or an independently effective stop.
+
+### Phasing
+
+- **Q1:** document sensor/control/data contract, actuator feedback criteria, gripper feedback option, space for future camera and coherent geometry; continue classical FK/IK and simulated task. A tiny synthetic log can be an optional exercise.
+- **Q2:** implement and assess observed state, calibration, safe local control and measured hardware logs on staged low-energy tests.
+- **Later in Y1:** add camera, calibration and a reproducible dataset pilot if time/safety allow.
+- **Y2+:** imitation learning and held-out benchmarking, then selectively VLA/RL. Compare every learned policy to the measured classical baseline.
+
+See [Robot-learning architecture and data contract](SCARA-01-LEARNING-PLATFORM.md) and [ADR-0002](../decisions/ADR-0002-scara-learning-platform.md). These are design obligations, **not proof of installed sensors or trained models**.
+
 ## Engineering questions to answer before CAD freeze
 
 1. What are the pickup and destination tray dimensions, robot base placement, required Z clearance and the minimum accessible radial reach?
@@ -69,26 +90,28 @@ tf2 and URDF frames will use one documented, tested joint/frame convention; meas
 3. What positioning **repeatability** and absolute **accuracy** are needed? How will each be measured separately?
 4. What cycle time, smoothness and maximum speed are acceptable for the low-energy prototype?
 5. What are the motion limits, collision cases, homing procedure, cable routing and loss-of-power behavior?
-6. Which joints require encoders or closed-loop feedback, and how will joint zero/calibration be established?
+6. Which joints require **independent measured joint feedback**, homing and calibration, and which motor/encoder alternatives can realistically provide it?
 7. How much do joint gear backlash and printed-link flexure contribute to total positioning error?
+8. How will we verify gripper aperture/grasp and timestamp camera, joint and action data for future learning?
 
 ## Architecture boundaries
 
 - **Math/robotics:** frame models, FK, IK with elbow branches/unreachable targets, Jacobian, link inertia, gravity on Z, torque/speed envelopes and motion profiles.
 - **Mechanical:** parametric CAD, printable J1/J2 links and covers sized for available K2 Plus printer, printable gripper with mechanical bearing/shaft hardware, possible printed rack/pinion, support/alignment, motor location, belt/reduction backlash, inserts, fasteners and iterative test coupons. Start with PETG/ASA candidate material trials; select structural polymer and wall/print orientation only after stiffness/load/temperature testing.
 - **Embedded/control:** homing, soft/hard travel limits, local position/velocity control, trajectory execution, watchdog and fault handling; hardware-level stop independent of ROS 2.
-- **ROS 2:** state reporting, high-level move requests, robot model, tf2, logging, simulation and orchestration. ROS 2 timer/Executor behavior is analyzed in the context of measured motion scheduling rather than as an isolated software goal.
-- **Future:** camera calibration/vision, closed-loop pick verification, operation tracking/ERP integration. Part flipping/roll/pitch is explicitly out of the initial task scope; reconsider only if a future application demands it.
+- **ROS 2:** observed (not just commanded) state reporting, high-level validated move requests, robot model, tf2, time-aligned logging, simulation and orchestration. ROS 2 timer/Executor behavior is analyzed in the context of measured motion scheduling rather than as an isolated software goal.
+- **Future:** fixed camera and calibration/vision, demonstration and imitation data, closed-loop pick verification, policy benchmarking, operation tracking/ERP integration. Part flipping/roll/pitch is explicitly out of the initial task scope; reconsider only if a future application demands it.
 
 ## Q1 learning/demo gates (2026-10-26 to 2027-01-24)
 
 **Mandatory, evidence-based Q1 result:**
 1. A documented use case and validated workspace/problem requirements.
 2. Independently derived and tested 2R FK/IK; joint limits, two elbow branches, unreachable and singular cases demonstrated.
-3. Preliminary torque, speed, acceleration, load and structural estimates, with assumptions and uncertainties.
+3. Preliminary torque, speed, acceleration, load and structural estimates, with assumptions and uncertainties, **including a measured joint feedback and gripper-observability design choice**.
 4. A versioned **four-axis R-R-P-R model concept** with frame conventions and yaw relation; deliver a reproducible **R-R-P motion model** as mandatory, and simulate J4 yaw as part of Q1 when feasible. Report unsupported/missing model or simulation capabilities rather than claiming completion.
 5. A reproducible simulated low-speed tray-to-tray pick/place sequence with logs, clear success/failure definition and measured outcomes. Include tool yaw in the scenario when J4 simulation is supported; if full physical collision simulation is unavailable, document limitations and maintain a reproducible kinematic sequence.
-6. A concise Q1 review: observations, tests, safety assumptions, defects and Q2 build plan.
+6. A **draft versioned command/observation/episode contract** and reserved mounting provisions for a future camera, without requiring a working camera or learned model.
+7. A concise Q1 review: observations, tests, safety assumptions, defects and Q2 build plan.
 
 **Stretch, only if design gates/time permit:** physical two-axis low-voltage benchtop prototype with independent stop and conservative motion tests; then optional Z/gripper. A completed working **four-axis physical SCARA with gripper** is **not** a mandatory 65-hour Q1 promise. The physical integration path continues into Q2.
 
