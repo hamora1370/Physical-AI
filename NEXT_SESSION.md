@@ -6,16 +6,17 @@
 
 ## Decision made 2026-10-26
 
-The learner approved switching Q1 to a **project-centered integrated robotics curriculum**, rather than separating ROS/software tools from mechanical, mathematical and control engineering. The single robot is the common thread: concept → requirements for a printable compact R-R-P-R and gripper → 2R FK/IK → mechanical/actuator design → sensing/control → RRP path → ROS model/simulation → review.
+The learner approved switching Q1 to a **project-centered integrated robotics curriculum**, rather than separating ROS/software tools from mechanical, mathematical and control engineering. They also approved using SCARA-01 as a **future Physical-AI/robot-learning platform**: actual joint feedback (not commands-as-observations), timestamped state/actions and later camera, stable ROS 2 interface, observable printed gripper, CAD/simulation/hardware alignment, and local independent safety. The single robot is the common thread: concept → requirements for a printable compact R-R-P-R and gripper → 2R FK/IK → mechanical/actuator design → sensing/control → RRP path → ROS model/simulation → review.
 
 - [SCARA-01 concept/requirements hypotheses](docs/projects/SCARA-01-CONCEPT.md)
+- [Learning-ready architecture and data schema proposal](docs/projects/SCARA-01-LEARNING-PLATFORM.md) · [ADR-0002](docs/decisions/ADR-0002-scara-learning-platform.md)
 - [Live Q1 13-week learning plan and updated Week 1](docs/roadmap/Q1-2026-10.md)
 - [Active design requirements task #6](https://github.com/hamora1370/Physical-AI/issues/6)
 - [Q1 milestone #5](https://github.com/hamora1370/Physical-AI/issues/5)
 
 ## Next **single** teaching action
 
-**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, required J4 horizontal yaw (flipping explicitly not needed), Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0.
+**SCARA-01 compact printability/workspace workshop (Issue #6), not another isolated ROS 2 tutorial.** Start with a simple fixed-tray pick/place task and teach why the mechanism needs J1, J2, prismatic Z **and wrist yaw J4**, then distinguish printed-gripper opening from the four tool pose DOF. Draw a labeled coordinate sketch and derive the ideal planar reach for provisional **smaller** `L1=130 mm`, `L2=110 mm`. Ask for engineering justification of compact tray size/placement (old place point `(160,200)` is beyond 240 mm), printed part dimensions/mass, printed two-jaw gripper, required J4 horizontal yaw (flipping explicitly not needed), Z clearance and repeatability vs accuracy. Mark unknowns; do not present tentative values as measured. Capture requirements v0. **Also log future-learning provisions**: how to observe real J1/J2/Z/J4 state and gripper aperture, where a future camera can mount, and what ROS 2/episode data interface is expected. Do not choose motor models or train policies yet.
 
 **Teaching style:** explain one concept deeply, connect it to this SCARA task, then do a small calculation and comprehension check before another topic. Do not rush toward CAD purchase/Gazebo.
 
@@ -30,13 +31,13 @@ The learner approved switching Q1 to a **project-centered integrated robotics cu
 
 ## Q1 definition of done
 
-Reliable conceptual and numerical understanding with evidence; a tested 2R FK/IK, initial sizing tradeoffs, documented R-R-P motion model plus wrist-yaw relation (J4 simulation when feasible), and reproducible simulated pick/place sequence (or explicit simulator limitations/fallback). **Low-energy guarded physical 2R prototype is a stretch**, not an automatic requirement of ~65 study hours. Full four-axis and gripper physical integration can extend to Q2.
+Reliable conceptual and numerical understanding with evidence; a tested 2R FK/IK, initial sizing tradeoffs, documented R-R-P motion model plus wrist-yaw relation (J4 simulation when feasible), and reproducible simulated pick/place sequence (or explicit simulator limitations/fallback). **Low-energy guarded physical 2R prototype is a stretch**, not an automatic requirement of ~65 study hours. Full four-axis and gripper physical integration can extend to Q2. **Q1 learning-ready exit gate is a reviewed feedback/interface/logging design, not installed encoders/cameras, a dataset or a learned model.**
 
 ## Remaining verification / limitations
 
 - ROS 2 `ROS_DISTRO` and meta-package installation checks; WSLg/RViz/Gazebo not yet verified.
 - No independent 2R FK/IK implementation or numeric tests verified; [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3) applies to SCARA 2R subchain.
-- No SCARA CAD, purchased hardware, motion test, physical robot or production cell has been demonstrated.
+- No SCARA CAD, purchased hardware, motion test, physical robot or production cell has been demonstrated. Neither encoder telemetry nor synchronized camera/robot dataset nor AI policy has been verified.
 - Safe return to ERP Linux workflow remains outstanding. Maintain sequential heavy-use of ERP/ToliHub and robotics environments.
 - Learning mastery requires demonstration; `L0` in skill matrix is unassessed, not inability.
 
