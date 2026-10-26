@@ -67,7 +67,7 @@ references/      curated resources
 
 ## First checkpoint
 
-**2027-01-24:** SCARA-01 engineering requirements and design, independently verified FK/IK, a reproducible **simulated R-R-P pick-and-place** workflow (or a recorded simulation blocker with reproducible fallback) and a Q1 review. Physical 2R prototyping is an optional stretch; safe three-axis physical integration can continue in Q2. Dates remain planning targets; mastery gates take precedence.
+**2027-01-24:** SCARA-01 engineering requirements and design, independently verified FK/IK, a reproducible **simulated R-R-P pick-and-place** workflow (or a recorded simulation blocker with reproducible fallback) and a Q1 review. Physical 2R prototyping is an optional stretch; safe staged four-axis/gripper physical integration can continue in Q2. Dates remain planning targets; mastery gates take precedence.
 
 ## Privacy and licensing
 
