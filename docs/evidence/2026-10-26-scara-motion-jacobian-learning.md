@@ -97,3 +97,22 @@ The determinant and the straight-arm singularity cases are still tutor reference
 **Exercise conclusion:** the four-step **guided 2R Jacobian exercise is complete**. This is better evidence than a self-report but **does not complete full M04 / the Week 9–10 Jacobian gate**: still need closed-book explanation, an unfamiliar numeric configuration, programmatic check, limits and singularity diagnosis. Per [learning level policy](../LEARNING_SYSTEM.md), skill **M04 remains L0/unassessed for closed-book independent mastery**, while `status=guided_exercise_passed` reflects observed progress. `L1` requires explanation without reference and `L2` requires independently implemented/tested code.
 
 **Immediate next topic (learner-requested):** Closed-Loop Control in SCARA-01: desired vs measured joint position, control error `e=q_target-q_measured`, a simple illustrative proportional correction, sensor feedback vs command, safety and where ROS 2/AI may interface. Present **one simple case and one question** before PI/PID, controller timing, advanced hardware or ROS implementation. 
+
+## Guided Jacobian exercise: PASS (2026-11-01)
+
+**Evidence:** Four-step learner-authored answers in the tutoring conversation, checked against the equations. The tutor supplied the SCARA FK equations and structured prompts. This is a completed **guided mathematical exercise**, not an independent code test or closed-book proficiency test.
+
+| Stage | Answer entered by learner | Check |
+|---|---|---|
+| X derivatives | dx/dq1 = -L1 sin(q1) - L2 sin(q1+q2); dx/dq2 = -L2 sin(q1+q2). At 0°,90°: -110, -110. | PASS |
+| Y derivatives | dy/dq1 = L1 cos(q1) + L2 cos(q1+q2); dy/dq2 = L2 cos(q1+q2). At 0°,90°: 130, 0. | PASS |
+| Forward velocity | For qdot=(+0.1,-0.1) rad/s, tool velocity=(0,+13) mm/s, along +Y. | PASS |
+| Inverse velocity | For requested tool velocity=(+11,+13) mm/s, learner calculated qdot=(+0.1,-0.2) rad/s. | PASS |
+
+Reference: L1=130 mm, L2=110 mm, q1=0°, q2=90°, J=[[-110,-110],[130,0]] mm/rad.
+
+**Verification of final step:** Vx=-110(0.1)-110(-0.2)=+11 mm/s; Vy=130(0.1)+0(-0.2)=+13 mm/s.
+
+**Assessment boundary:** Four-stage guided Jacobian exercise is **complete**. User has demonstrated correct partial differentiation, evaluation, forward multiplication and inverse linear solve for this known case. No novel-case test, independent Python implementation, closed-book explanation, determinant calculation by learner or physical robot test was provided. Maintain a distinction between a passed exercise and full M04 proficiency under [learning level rules](../LEARNING_SYSTEM.md): L1 requires explanation without reference and L2 independently tested implementation.
+
+**Next learner-requested topic:** SCARA-01 closed-loop control. Teach desired joint position versus independently measured position, error, local correction and bounded low-level control; then build from one illustrative J1 example. Full closed-loop hardware/simulation implementation is pending.
