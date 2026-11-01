@@ -1,6 +1,6 @@
 # Next session — resume here
 
-**Updated:** 2026-10-26  
+**Updated:** 2026-11-01  
 **Track:** Y1 / Q1 / official Week 1 (2026-10-26 → 2026-11-01)  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
 
@@ -20,26 +20,15 @@ The learner questioned over-investing class time in contact-friction and gripper
 
 **Already discussed conceptually:** SCARA R-R-P-R and 4 pose DOF, independent horizontal yaw, compact printed two-jaw gripper, candidate 130/110 mm links (20–240 mm ideal unconstrained annulus), joint/link collision and Z transfer clearance; preliminary 40×30×30 mm / 100 g reference part and ~50 mm gripper opening are **not confirmed user requirements**; basic force/friction relation and `mu` halving implies required normal force doubling. Do not certify design or hardware mastery based on these conversations.
 
-## Latest learning checkpoint — 2026-10-26
+## Completed learning checkpoint — 2026-11-01
 
-**Evidence:** [SCARA motion/Jacobian dialogue note](docs/evidence/2026-10-26-scara-motion-jacobian-learning.md). Learner gave correct conceptual answers about multiple IK branches, collision-aware Motion Planning vs IK, Joint-Space vs Cartesian tool paths, and the need for variable joint rates to keep Cartesian speed controlled. Tutor explained 2R Jacobian through partial derivatives, numerical matrix/velocity examples, near-fully-extended singularity, and its relevance to control and future Physical AI. Learner **explicitly reported understanding**. **No independently derived Jacobian, learner calculations, FK/IK code, numerical test, robot motion, simulation or physics/safety test has been assessed**; keep skill `current_level=L0` until assessed.
+**Four-stage SCARA-01 Jacobian exercise: PASS (guided chat).** Evidence: [motion/Jacobian learning note](docs/evidence/2026-10-26-scara-motion-jacobian-learning.md). The learner correctly derived all four partial derivatives of 2R FK, giving `J=[[-110,-110],[130,0]] mm/rad` at `q1=0°, q2=90°` with `L1=130 mm, L2=110 mm`. The learner then correctly calculated `(xdot,ydot)=(0,13) mm/s` from `qdot=(0.1,-0.1) rad/s`, and solved the inverse-velocity task `(xdot,ydot)=(11,13) mm/s` yielding **`qdot=(0.1,-0.2) rad/s`**, independently verified by substitution. **Mark the four-step chat exercise complete, not full Jacobian mastery.** No independently executed code, unseen test, closed-book mastery check or physical model; leave M04 skill level conservative per docs/LEARNING_SYSTEM.md.
 
-Reference exercise data (instructor answer; learner has **not** independently computed it): `L1=130 mm`, `L2=110 mm`, `q1=0°, q2=90°`, `J=[[-110,-110],[130,0]] mm/rad`; when `qdot=(0.1,-0.1) rad/s`, `vdot=(0,13) mm/s`. Straight posture `q2=0°` is Jacobian singular, although arm can fold and start moving inward with initial X speed zero.
+## Next **single** teaching action — start now
 
-### Rest of Week 1 — proposed focused sessions (Oct 26–Nov 1)
+**Learner specifically requests Closed-Loop Control for SCARA-01.** Teach the conceptual difference between `q_target` (commanded position) and `q_measured` (real encoder-observed joint position). Define error `e=q_target-q_measured`, show a single simple J1 numerical example in degrees (e.g. target 40°, measured 32° → error +8°) and motivate repeated observation/correction. Introduce proportional controller **only if it fits this same step** (`u=Kp*e` as a simple hypothetical velocity-command mapping in units; not motor torque without a physical model), explain that positive output means correction toward the target with defined sign. Explain why a commanded/estimated servo position is not independently observed feedback; distinguish high-level ROS/AI goal from independent low-level limit enforcement. Ask *one* comprehension question, then wait. **Do not dump full PID/PWM/motor driver/ROS 2 architecture at once.**
 
-1. **Independent mini Jacobian calculation (~35–45 min):** derive four partial derivatives from the 2R FK expressions, calculate the example above, explain each column of J. One exercise, guided feedback; no full robotic software stack.
-2. **IK branch/path/trajectory reasoning (~40–50 min):** choose between two SCARA elbow configurations while respecting limits and collisions; contrast geometric path vs time-parameterized trajectory; check straight-arm singularity intuitively.
-3. **Feedback control architecture (~45–60 min):** one diagram: goal → IK/motion planner → trajectory → independent bounded low-level motor controller → *measured* joint/gripper state → feedback/logging. Locate future camera/AI decision point, without coding an AI model.
-4. **Quick requirements checkpoint (~20–30 min):** record unknown tray and part dimensions, clearance, physical joint travel and the next design decision. Optional tiny Python numeric check if learner requests it.
-
-The totals are **proposed 140–185 minutes**, not additional mandatory workload or an estimate of time previously spent. Preserve the original ~5 focused h/week cap. If the learner is short on time, prioritize activities 1 and 3. Stop after each concept and check comprehension before advancing.
-
-### Next **single** teaching action
-
-**Ask the learner to derive one small Jacobian example independently, at their pace**, starting from already learned FK and the four partial derivatives at `q1=0°, q2=90°`. Check whether they can explain why `qdot=(+0.1,-0.1) rad/s` yields `(xdot,ydot)=(0,13) mm/s`; offer a guided hint instead of repeating the full lecture. Continue to branch/path/singularity and closed-loop feedback *only after this step*. Do not classify a correct conceptual reply as independent math competency.
-
-**Deferred until needed:** full numerical IK program/tests (planned Weeks 3–4), detailed gripping-force/rack/gear motor sizing (Weeks 5–6), detailed Jacobian conditioning/velocity-limited trajectory (Weeks 9–10), ROS deployment and simulation (Weeks 11–12), camera and AI policy training (later). Preserve the learning platform feedback/camera-ready requirements from ADR-0002.
+**Remaining Week 1 carryover:** IK branch / collision-path reasoning and requirements checkpoint are not complete and can move to Week 2 if necessary. Detailed actuator mechanics stay deferred. No stopwatch evidence exists for previous hours; respect ~5 h/week ceiling.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
