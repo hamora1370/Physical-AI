@@ -2,7 +2,7 @@ pillar,skill_id,topic,prerequisites,target_year,target_level,current_level,statu
 Math,M01,Linear algebra and coordinate frames,None,Y1,L3,L0,unassessed,,
 Math,M02,Rotations quaternions and SE3,M01,Y1,L3,L0,unassessed,,
 Math,M03,Forward kinematics,M02,Y1,L3,L0,concept_discussed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,
-Math,M04,Jacobians and singularities,M03,Y1,L3,L0,concept_discussed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,
+Math,M04,Jacobians and singularities,M03,Y1,L3,L0,guided_exercise_passed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,2026-11-08
 Math,M05,Inverse kinematics,M03;M04,Y1,L3,L0,concept_discussed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,
 Mechanics,ME01,Mechanisms degrees of freedom and usable workspace,M01,Y1,L3,L0,concept_discussed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,
 Mechanics,ME02,Link stiffness backlash and preliminary actuator sizing,ME01;M03,Y1,L2,L0,unassessed,,
