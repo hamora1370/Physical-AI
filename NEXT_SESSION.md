@@ -1,7 +1,7 @@
 # Next session — resume here
 
-**Updated:** 2026-11-01  
-**Track:** Y1 / Q1 / official Week 1 (2026-10-26 → 2026-11-01)  
+**Updated:** 2026-11-02  
+**Track:** Y1 / Q1 / official Week 2 (2026-11-02 → 2026-11-08)  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
 
 ## Decision made 2026-10-26
@@ -24,11 +24,27 @@ The learner questioned over-investing class time in contact-friction and gripper
 
 **Four-stage SCARA-01 Jacobian exercise: PASS (guided chat).** Evidence: [motion/Jacobian learning note](docs/evidence/2026-10-26-scara-motion-jacobian-learning.md). The learner correctly derived all four partial derivatives of 2R FK, giving `J=[[-110,-110],[130,0]] mm/rad` at `q1=0°, q2=90°` with `L1=130 mm, L2=110 mm`. The learner then correctly calculated `(xdot,ydot)=(0,13) mm/s` from `qdot=(0.1,-0.1) rad/s`, and solved the inverse-velocity task `(xdot,ydot)=(11,13) mm/s` yielding **`qdot=(0.1,-0.2) rad/s`**, independently verified by substitution. **Mark the four-step chat exercise complete, not full Jacobian mastery.** No independently executed code, unseen test, closed-book mastery check or physical model; leave M04 skill level conservative per docs/LEARNING_SYSTEM.md.
 
+## Learning checkpoint — 2026-11-02
+
+**Conceptual Closed-Loop Control / P-PD / telemetry / fault reasoning:** learner accurately evaluated position-error direction, PD braking torque (at e=0, qdot=-2 rad/s and Kd=0.15 gives +0.3 N·m), P vs PD differences, motor-side versus joint-side encoder/backlash, the need to evaluate tracking error over time, and multiple fault hypotheses. **One unit mistake was corrected:** for e=5 degrees, Kp=3 s^-1, the P command was +15 **deg/s**, not +15 rad/s. When motor encoder moved but joint encoder was fixed and motor current normal, learner proposed faulty joint encoder; tutor noted broken/slipping transmission is another compatible hypothesis. None of these discussions establish independently functioning control or diagnosis.
+
+[Detailed 2026-11-02 learning evidence](docs/evidence/2026-11-02-scara-feedback-and-fault-learning.md). Previously [guided Jacobian exercise PASS](docs/evidence/2026-10-26-scara-motion-jacobian-learning.md). The physical SCARA and controller do not exist as verified artifacts.
+
+## Week 2 learning plan — November 2–8 (~5 focused hours; flexible)
+
+| Order | Budget | Scope | Evidence |
+|---|---:|---|---|
+| 1 | 60 min | Sampling Time `Ts` vs update frequency `fs`; 1/10/100 ms examples, sample-and-hold, nominal versus measured update intervals and jitter. | Independent one-step J1 P controller calculation with units; explain why time interval matters. |
+| 2 | 60 min | Discrete-time P/PD vs continuous-time; small hand calculation and optional small Python simulation with two `Ts` values, **no actual servo hardware**. | Verify numerical example; report dt, stability/tracking assumptions and observed effect if simulation runs. |
+| 3 | 60 min | ROS 2 host vs local motor controller, encoder sample/timestamp, setpoint/actual, watchdog and fault event boundaries; connect to previous **learner-reported but not verified** Executor lab. | One clear architecture/signal-flow diagram with realistic timing and safe authority boundaries. |
+| 4 | 75 min | Return to issue #6: base/tray/part workcell assumptions, safe XY pose and Z clearance; check elbow-branch/collision-path choices. | Requirements v0 known/assumed/unknown table and initial geometrical workcell sketch; **do not assume physical specifications confirmed**. |
+| 5 | 45 min | Weekly review and one unfamiliar short exercise, set Week 3 FK/IK coding start. | Record one independently answered check, remaining environment/requirements gaps. |
+
+**Time total: 300 min (5 h) only if actually available.** Adapt pace by comprehension, do not turn into checklist race. Existing Q1 syllabus continues: Weeks 3–4 independent 2R FK/IK and joint-limited tests; Weeks 5–6 mechanical/actuator design; Weeks 7–8 deeper feedback and fault design; Weeks 9–10 trajectories/Jacobian tests; Weeks 11–12 ROS model/simulation.
+
 ## Next **single** teaching action — start now
 
-**Learner specifically requests Closed-Loop Control for SCARA-01.** Teach the conceptual difference between `q_target` (commanded position) and `q_measured` (real encoder-observed joint position). Define error `e=q_target-q_measured`, show a single simple J1 numerical example in degrees (e.g. target 40°, measured 32° → error +8°) and motivate repeated observation/correction. Introduce proportional controller **only if it fits this same step** (`u=Kp*e` as a simple hypothetical velocity-command mapping in units; not motor torque without a physical model), explain that positive output means correction toward the target with defined sign. Explain why a commanded/estimated servo position is not independently observed feedback; distinguish high-level ROS/AI goal from independent low-level limit enforcement. Ask *one* comprehension question, then wait. **Do not dump full PID/PWM/motor driver/ROS 2 architecture at once.**
-
-**Remaining Week 1 carryover:** IK branch / collision-path reasoning and requirements checkpoint are not complete and can move to Week 2 if necessary. Detailed actuator mechanics stay deferred. No stopwatch evidence exists for previous hours; respect ~5 h/week ceiling.
+**Teach Sampling Time / Loop Frequency using SCARA-01 J1.** Begin with `Ts=1/fs`, table 1 ms ↔ 1000 Hz, 10 ms ↔ 100 Hz, 100 ms ↔ 10 Hz. Contrast a digital controller that reads joint encoder, computes error, emits a command and waits until the next scheduled update with an ideal continuous-time controller. For a simple ideal velocity-output P law `omega_cmd=Kp*e`, take `target=60°`, `measured=50°`, `Kp=2 s^-1` and `Ts=10 ms`: command 20 deg/s; under **perfect speed tracking and zero-order-hold** the first-step movement is 0.2°. Ask only **one** numerical question comparing what changes if the same held speed lasts 100 ms (ideal first-step move 2°), and pause. Differentiate timing of ROS 2 planning, hardware drive loops and sensor readout later, not all in first explanation.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
