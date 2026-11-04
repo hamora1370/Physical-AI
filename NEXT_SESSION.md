@@ -1,6 +1,6 @@
 # Next session — resume here
 
-**Updated:** 2026-11-02  
+**Updated:** 2026-11-04  
 **Track:** Y1 / Q1 / official Week 2 (2026-11-02 → 2026-11-08)  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
 
@@ -42,9 +42,23 @@ The learner questioned over-investing class time in contact-friction and gripper
 
 **Time total: 300 min (5 h) only if actually available.** Adapt pace by comprehension, do not turn into checklist race. Existing Q1 syllabus continues: Weeks 3–4 independent 2R FK/IK and joint-limited tests; Weeks 5–6 mechanical/actuator design; Weeks 7–8 deeper feedback and fault design; Weeks 9–10 trajectories/Jacobian tests; Weeks 11–12 ROS model/simulation.
 
+## Learning checkpoint — 2026-11-04: discrete P simulation **PASS**
+
+Learner **implemented, executed and graphed** a discrete-time **position P → velocity command** controller for illustrative SCARA-01 J1 with ideal speed tracking. They calculated and explained the time-step effect, produced single-case plots, refactored `simulate_p(theta_initial,theta_target,kp,dt,steps)`, and made a three-curve plot across equal 7.2 s simulated durations. Learner predicted `[theta0,theta1,theta2]=[50,74,40.4]` degrees in the unstable case. Reviewer independently parsed/executed the supplied Python file and confirmed:
+
+| Ts (s) | Steps | a=1-Kp Ts (Kp=2/s) | Behavior | Final position |
+|---:|---:|---:|---|---:|
+| 0.1 | 72 | +0.8 | monotonic stable | 59.9999989469° |
+| 0.8 | 9 | -0.6 | alternating convergent | 60.10077696° |
+| 1.2 | 6 | -1.4 | alternating divergent | -15.29536° |
+
+**Complete this P *teaching exercise*, not the full feedback/mechatronics Q1 gate.** This is guided Python simulation only, not an independently validated physical controller. User-uploaded script and image were reviewed but **not committed to GitHub by this documentation update**. Minor code cleanup: move duplicate `plt.axhline` out of the loop and remove redundant pre-loop simulation call.
+
+[Full evidence and reproducibility notes](docs/evidence/2026-11-04-scara-discrete-p-simulation.md).
+
 ## Next **single** teaching action — start now
 
-**Teach Sampling Time / Loop Frequency using SCARA-01 J1.** Begin with `Ts=1/fs`, table 1 ms ↔ 1000 Hz, 10 ms ↔ 100 Hz, 100 ms ↔ 10 Hz. Contrast a digital controller that reads joint encoder, computes error, emits a command and waits until the next scheduled update with an ideal continuous-time controller. For a simple ideal velocity-output P law `omega_cmd=Kp*e`, take `target=60°`, `measured=50°`, `Kp=2 s^-1` and `Ts=10 ms`: command 20 deg/s; under **perfect speed tracking and zero-order-hold** the first-step movement is 0.2°. Ask only **one** numerical question comparing what changes if the same held speed lasts 100 ms (ideal first-step move 2°), and pause. Differentiate timing of ROS 2 planning, hardware drive loops and sensor readout later, not all in first explanation.
+**Learner explicitly requests ending introductory P exercises and moving to PD.** Honor the pace: introduce exactly one fundamental conceptual distinction before any new implementation. Previous P script commands **velocity** and assumes the motor follows it exactly; a PD simulation of derivative *damping* should instead start with a **torque-controlled inertial joint** `I*theta_ddot + b*theta_dot = torque`, and `torque_cmd=Kp*(theta_target-theta)-Kd*theta_dot` for a fixed target. Explain that in this second model `Kp` has units N·m/rad (not 1/s as in previous velocity P), `Kd` has N·m·s/rad, and `-Kd*theta_dot` damps motion. Clearly label the change in plant/command interface; do not imply dropping a D term into the old speed-output model is equivalent. Ask one short physical interpretation question (e.g. torque sign at zero position error and positive joint speed), only afterward scaffold a PD torque simulation with the learner. Maintain control practice to a bounded portion of week 2 and retain required FK/IK and workcell follow-ups.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
