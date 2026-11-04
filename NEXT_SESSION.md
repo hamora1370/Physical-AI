@@ -56,9 +56,19 @@ Learner **implemented, executed and graphed** a discrete-time **position P → v
 
 [Full evidence and reproducibility notes](docs/evidence/2026-11-04-scara-discrete-p-simulation.md).
 
+## Scope correction — 2026-11-04 (learner-approved)
+
+After reviewing a second agent's roadmap critique, learner **approved prioritizing SCARA-01 Requirements v0 (Issue #6)** over further PD/torque-plant practice. The recent guided P simulation work remains valuable and complete for the introductory unit, but control theory was absorbing too much time relative to the Q1 integrated robot deliverables. **Pause further numerical PD, inertia or tuning simulations**; leave PD in the learned-intro/backlog for just-in-time deeper control study.
+
+- **New draft:** [SCARA-01 workcell requirements v0](docs/projects/SCARA-01-REQUIREMENTS-v0.md), explicitly marked NOT VALIDATED. It preserves confirmed R-R-P-R + printable two-jaw gripper + yaw-only rotation; flags trial link lengths 130/110 mm, reach 20–240 mm, part sizes, Z, payload and jaw dimensions as unconfirmed hypotheses.
+- **Important geometry defect:** previous Place=(160,200) mm has r≈256.125 mm, beyond even the ideal 240 mm limit. Proposed **test-case only** Place=(120,140) mm gives r≈184.391 mm, and previous example Pick=(200,0) mm gives r=200 mm. Both are geometrically reachable, **but** joint limits, trays and collision paths have NOT been checked. User has not confirmed these test points.
+- **Single next step:** ask learner whether to accept the proposed **test-case** `Pick=(200,0), Place=(120,140)` mm relative to J1 origin, or choose different tray coordinates. Do not infer this design choice from silence. Then specify tray/part geometry incrementally and build a real v0 acceptance sketch.
+- Following this, one short ROS 2 host versus local drive/watchdog feedback architecture review; **Weeks 3–4 Nov 9–22** independent FK/IK implementation and tests ([Issue #3](https://github.com/hamora1370/Physical-AI/issues/3)). Keep issue #6 open until its acceptance gate is actually met; don't mistakenly mark premature hardware/precision claims complete.
+- Learner's agreement is a priority decision, **not** confirmation of proposed numerical coordinates.
+
 ## Next **single** teaching action — start now
 
-**Learner explicitly requests ending introductory P exercises and moving to PD.** Honor the pace: introduce exactly one fundamental conceptual distinction before any new implementation. Previous P script commands **velocity** and assumes the motor follows it exactly; a PD simulation of derivative *damping* should instead start with a **torque-controlled inertial joint** `I*theta_ddot + b*theta_dot = torque`, and `torque_cmd=Kp*(theta_target-theta)-Kd*theta_dot` for a fixed target. Explain that in this second model `Kp` has units N·m/rad (not 1/s as in previous velocity P), `Kd` has N·m·s/rad, and `-Kd*theta_dot` damps motion. Clearly label the change in plant/command interface; do not imply dropping a D term into the old speed-output model is equivalent. Ask one short physical interpretation question (e.g. torque sign at zero position error and positive joint speed), only afterward scaffold a PD torque simulation with the learner. Maintain control practice to a bounded portion of week 2 and retain required FK/IK and workcell follow-ups.
+**Workcell coordinate decision for Requirements v0.** Explain `r=sqrt(x^2+y^2)` and why candidate Place=(120,140) with r≈184.4 mm is inside the ideal annulus for 130/110 links, while old Place=(160,200) is outside; cite need for joint-limit/collision checks. Ask **one** grounded question: accept Pick=(200,0) and Place=(120,140) for preliminary FK/IK test, or propose replacements? Following confirmation ask one new engineering requirement at a time, no new PD lesson yet.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
