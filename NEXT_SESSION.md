@@ -56,19 +56,21 @@ Learner **implemented, executed and graphed** a discrete-time **position P → v
 
 [Full evidence and reproducibility notes](docs/evidence/2026-11-04-scara-discrete-p-simulation.md).
 
-## Scope correction — 2026-11-04 (learner-approved)
+## Scope and geometry update — 2026-11-04 (learner confirmed)
 
-After reviewing a second agent's roadmap critique, learner **approved prioritizing SCARA-01 Requirements v0 (Issue #6)** over further PD/torque-plant practice. The recent guided P simulation work remains valuable and complete for the introductory unit, but control theory was absorbing too much time relative to the Q1 integrated robot deliverables. **Pause further numerical PD, inertia or tuning simulations**; leave PD in the learned-intro/backlog for just-in-time deeper control study.
+**Teaching plan:** initial P velocity-output simulation completed; PD torque/inertia practice paused to rebalance project deliverables. Do **not** demand production workcell design details during foundational XY kinematics learning.
 
-- **New draft:** [SCARA-01 workcell requirements v0](docs/projects/SCARA-01-REQUIREMENTS-v0.md), explicitly marked NOT VALIDATED. It preserves confirmed R-R-P-R + printable two-jaw gripper + yaw-only rotation; flags trial link lengths 130/110 mm, reach 20–240 mm, part sizes, Z, payload and jaw dimensions as unconfirmed hypotheses.
-- **Important geometry defect:** previous Place=(160,200) mm has r≈256.125 mm, beyond even the ideal 240 mm limit. Proposed **test-case only** Place=(120,140) mm gives r≈184.391 mm, and previous example Pick=(200,0) mm gives r=200 mm. Both are geometrically reachable, **but** joint limits, trays and collision paths have NOT been checked. User has not confirmed these test points.
-- **Single next step:** ask learner whether to accept the proposed **test-case** `Pick=(200,0), Place=(120,140)` mm relative to J1 origin, or choose different tray coordinates. Do not infer this design choice from silence. Then specify tray/part geometry incrementally and build a real v0 acceptance sketch.
-- Following this, one short ROS 2 host versus local drive/watchdog feedback architecture review; **Weeks 3–4 Nov 9–22** independent FK/IK implementation and tests ([Issue #3](https://github.com/hamora1370/Physical-AI/issues/3)). Keep issue #6 open until its acceptance gate is actually met; don't mistakenly mark premature hardware/precision claims complete.
-- Learner's agreement is a priority decision, **not** confirmation of proposed numerical coordinates.
+**Confirmed by learner for exercises:** revised **Place=(120,140) mm** is approved as a provisional **XY target for introductory FK/IK**; under L1=130 mm and L2=110 mm (still *candidate* link lengths) radial distance is 184.391 mm, within ideal 20–240 mm reach. Previous Place=(160,200) mm (r≈256.125 mm) is unreachable with the candidate links. **Pick=(200,0) mm** can remain an illustrative previous test point, *not* a learner-confirmed final physical tray coordinate. No collision, joint-range or physical workcell feasibility is claimed.
+
+**Explicit learner preference:** postpone detailed **tray dimensions, part dimensions, payload, gripper sizing and Z/tray clearance** until relevant mechanical engineering or collision-aware design phases. Learner considers those unnecessary at this early educational stage. Never ask for them simply to satisfy a requirements checklist now.
+
+- Updated [SCARA-01 Requirements v0 learning baseline](docs/projects/SCARA-01-REQUIREMENTS-v0.md), leaving full physical Requirements Issue #6 OPEN for later.
+- Preserve W2 unfinished architecture review; then Weeks 3–4 (Nov 9–22), independently write and test the planar 2R FK/IK ([Issue #3](https://github.com/hamora1370/Physical-AI/issues/3)).
+- Detailed PD/torque-based simulation returns when hardware dynamics and actuator choice justify it.
 
 ## Next **single** teaching action — start now
 
-**Workcell coordinate decision for Requirements v0.** Explain `r=sqrt(x^2+y^2)` and why candidate Place=(120,140) with r≈184.4 mm is inside the ideal annulus for 130/110 links, while old Place=(160,200) is outside; cite need for joint-limit/collision checks. Ask **one** grounded question: accept Pick=(200,0) and Place=(120,140) for preliminary FK/IK test, or propose replacements? Following confirmation ask one new engineering requirement at a time, no new PD lesson yet.
+Present a **single compact conceptual architecture** for SCARA-01: ROS 2 host (goal/planning/monitoring) → bounded local controller (feedback/control/watchdog/limits) → motor/driver → joint, with **joint encoder observations fed back to local controller and ROS reporting measured state rather than echoing commands**. Explicitly distinguish proposed architecture from implemented hardware. Ask one conceptual comprehension question about which part must enforce safety if host ROS 2 commands cease. After this short checkpoint, begin 2R FK/IK with known illustrative XY targets; do not drift into PD or tray/part sizing.
 
 ## Evidence carried from earlier sessions — avoid repetition
 
