@@ -1,7 +1,7 @@
 # SCARA-01 — Requirements v0 (workcell and geometry)
 
 **Draft started:** 2026-11-04  
-**Status:** `DRAFT / awaiting learner confirmation of workspace and part requirements` — **not** a validated engineering specification.  
+**Status:** `EARLY LEARNING BASELINE — illustrative XY targets; physical engineering requirements deferred`. Learner accepted the revised Place XY test point on 2026-11-04. This is **not** a validated physical workcell specification.  
 **Issue:** [#6 — SCARA-01 workcell, printable mechanism and requirements](https://github.com/hamora1370/Physical-AI/issues/6)  
 **Source of existing constraints:** [SCARA-01 concept](SCARA-01-CONCEPT.md), [robot-learning architecture](SCARA-01-LEARNING-PLATFORM.md), [Q1 roadmap](../roadmap/Q1-2026-10.md). Do not confuse early examples or assistant proposals with user-approved dimensions.
 
@@ -26,7 +26,7 @@ Adopt the conceptual model, **not yet validated in CAD**:
 - Gripper jaw opening has independent actuation; it is **not** the fifth pose DOF.
 - Mechanical travel of J1, J2, J4, collision geometry, joint zero and tool offsets: **TBD**.
 
-## C. Workcell hypothesis (not an approved layout)
+## C. Workcell XY test points (learning baseline, not an approved physical layout)
 
 The earlier example `Place=(160,200) mm` lies outside the proposed compact 2R arm's ideal range; do **not** retain it as a reachable target.
 
@@ -38,8 +38,8 @@ The earlier example `Place=(160,200) mm` lies outside the proposed compact 2R ar
 | Ideal maximum radius | `130+110=240 mm` | **Geometric only**, before joints/collisions |
 | Previous example Pick `(200,0)` | `r=200 mm` | Geometrically reachable; **not** a confirmed physical tray coordinate |
 | Previous example Place `(160,200)` | `r=sqrt(160^2+200^2)=256.125 mm` | **Unreachable** even ideally with these links |
-| **New proposed comparison point** Place `(120,140)` | `r=sqrt(120^2+140^2)=184.391 mm` | **Geometrically reachable only**; candidate for learner approval |
-| Proposed transfer | `(200,0) -> (120,140)` in XY | **Illustrative test case**, not validated safe approach/grasp/tray placement |
+| **Learner-accepted XY test point** Place `(120,140)` | `r=sqrt(120^2+140^2)=184.391 mm` | **Accepted for introductory FK/IK exercises only**; not an approved tray placement |
+| Illustrative transfer | `(200,0) -> (120,140)` in XY | **Place accepted for FK/IK XY tests; Pick remains a useful previous example**, not separately approved as a physical tray coordinate or collision-safe motion |
 
 No workspace mask, full arm/gripper collision assessment, tray dimensions, intermediate transfer waypoints, singularity clearance, Z lift/return trajectory or joint-limited IK check has been established. The two targets should only be treated as candidates for forthcoming geometry tests; **radial reachability is necessary, not sufficient**.
 
@@ -48,7 +48,7 @@ No workspace mask, full arm/gripper collision assessment, tray dimensions, inter
 ```text
                       +Y
                        ^
-                       |    Place?  (120,140)  [candidate]
+                       |    Place (120,140) [accepted XY test]
                        |      o
                        |
             J1 O(0,0)  +------------------------> +X
@@ -59,7 +59,9 @@ No workspace mask, full arm/gripper collision assessment, tray dimensions, inter
 
 The sketch describes **target centers**, not full tray rectangles. Real tray dimensions and collision zones must be supplied separately before approving a workcell.
 
-## D. Part, grasp and mechanism hypotheses
+## D. Part, grasp and mechanism hypotheses — deliberately deferred
+
+**Explicit learner decision, 2026-11-04:** do **not** request or select detailed tray dimensions, part dimensions, grasp envelope, payload values, or precise Z clearance at this introductory stage. Those physical constraints are only needed when transitioning from ideal 2R XY kinematics to mechanism sizing and collision-aware physical task design. Earlier numbers remain illustrative and **are not task requirements**.
 
 | Requirement | Candidate hypothesis | Decision / test still needed |
 |---|---|---|
@@ -82,10 +84,12 @@ The sketch describes **target centers**, not full tray rectangles. Real tray dim
 - [ ] Preserve consistent frame/axis conventions in future CAD, 2R FK/IK, URDF and simulated task.
 - [ ] Reserve physical space and wiring/cable routing for future camera, no camera required to pass Q1.
 
-## F. Requirements v0 acceptance gate / next incremental decision
+## F. Scope gate and next incremental lesson
 
-**Gate not complete:** physical workcell sketch and measured (or explicitly chosen design) coordinates, part envelopes, grip approach, Z clearance, angular limits, first-pass joint/feedback diagram and learner explanation are still missing. Keep issue #6 OPEN.
+**Completed for the current introductory XY learning scope:** settled on revised **Place=(120,140) mm** as a learner-accepted FK/IK test target under provisional L1=130 mm, L2=110 mm. Retain **Pick=(200,0) mm** as the existing illustrative test point, not a learner-confirmed physical tray layout. Rejected previous Place=(160,200) mm as radially unreachable. This is sufficient geometry for the **initial ideal planar FK/IK exercises**.
 
-**Next SINGLE learner choice (Nov 4):** Are we retaining illustrative `Pick=(200,0)` mm and provisionally replacing the unreachable old Place with `Place=(120,140)` mm, using J1 at the base origin, *only for the first FK/IK/workspace test*? Or does the learner prefer a different tray layout? On confirmation, mark these as **accepted test-case geometry** (still not final CAD). Only then expand to physical tray footprint / obstacle clearance.
+**Intentionally deferred by learner:** numerical tray/part envelopes, heights, grip loads, mounting footprint, final joint stops, and physical placement. Avoid reopening these details in the initial teaching stage. The **engineering-grade requirements and full Issue #6 acceptance criteria remain OPEN** until later mechanical design / collision-aware evaluation; do not mislabel placeholder values as accepted specs.
+
+**Next immediate learning task:** concise conceptual ROS 2 host → local motor controller → actuator/encoder feedback and watchdog separation (one simple diagram and one meaningful check); then begin independently implemented 2R FK/IK in Week 3 using the illustrative XY test points and explicit assumptions.
 
 **Schedule boundary:** PD torque/second-order numerical work paused by agreement 2026-11-04. Brief ROS/local controller architecture review follows v0 workcell decision; Weeks 3–4 (Nov 9–22) independent 2R FK/IK in [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3) remains mandatory. Guided P exercise was completed and evidenced in [2026-11-04 control note](../evidence/2026-11-04-scara-discrete-p-simulation.md).
