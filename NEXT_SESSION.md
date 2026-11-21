@@ -1,8 +1,14 @@
 # Next session — resume here
 
-**Updated:** 2026-11-04  
-**Track:** Y1 / Q1 / official Week 2 (2026-11-02 → 2026-11-08)  
+**Updated:** 2026-11-21  
+**Track:** Y1 / Q1 / Weeks 3–4 (2026-11-09 → 2026-11-22), FK/IK implementation  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
+
+## Current resume point — 2026-11-21 (supersedes older next-action text below)
+
+Learner requested a slower, detailed conceptual ROS 2 concurrency review after a study gap. Review now **complete by learner request**: Node/Topic/DDS/QoS, timestamp and stale state, Executors/Threads, async vs CPU-bound work, mutually exclusive callback groups, short Mutex, race conditions and lock-order deadlocks. Learner correctly explained why global lock order A then B prevents the specific cycle. **Discussion only**, no independently executed concurrency/ROS benchmarks or code. [Review evidence](docs/evidence/2026-11-21-ros2-concurrency-review-and-fk-resume.md). Do not inflate mastery or reopen the review without a concrete SCARA need.
+
+**Next ONE teaching action (active now):** Continue [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3), an **independently written and tested planar 2R FK** for SCARA-01. Teach joint-relative angle composition and units briefly, then have the learner write the Python function and verify one known numerical case before expanding to tests. Candidate L1=130 mm, L2=110 mm; q angles in radians. Cases: (q1=0°,q2=90°) → (130,110) mm; (90°,0°) → (0,240) mm. In repo, `exercises/01_robot_math/fk_2r.py` **already contains a generic solution in meters** and has function signature `fk_2r(length_1,length_2,q1,q2)` plus `tests/test_fk_2r.py` generic tests. This starter is not learner evidence. Avoid duplicating it without thinking, avoid changing its public interface unintentionally; invite learner to independently derive/code a SCARA-specific implementation or tests. After FK code and unfamiliar-case validation, proceed to Reachability/Workspace, IK elbow branches and singularities.
 
 ## Decision made 2026-10-26
 
@@ -68,7 +74,7 @@ Learner **implemented, executed and graphed** a discrete-time **position P → v
 - Preserve W2 unfinished architecture review; then Weeks 3–4 (Nov 9–22), independently write and test the planar 2R FK/IK ([Issue #3](https://github.com/hamora1370/Physical-AI/issues/3)).
 - Detailed PD/torque-based simulation returns when hardware dynamics and actuator choice justify it.
 
-## Next **single** teaching action — start now
+## Earlier single teaching action — historical (superseded 2026-11-21)
 
 Present a **single compact conceptual architecture** for SCARA-01: ROS 2 host (goal/planning/monitoring) → bounded local controller (feedback/control/watchdog/limits) → motor/driver → joint, with **joint encoder observations fed back to local controller and ROS reporting measured state rather than echoing commands**. Explicitly distinguish proposed architecture from implemented hardware. Ask one conceptual comprehension question about which part must enforce safety if host ROS 2 commands cease. After this short checkpoint, begin 2R FK/IK with known illustrative XY targets; do not drift into PD or tray/part sizing.
 
