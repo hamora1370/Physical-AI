@@ -1,8 +1,16 @@
 # Next session — resume here
 
-**Updated:** 2026-11-21  
-**Track:** Y1 / Q1 / Weeks 3–4 (2026-11-09 → 2026-11-22), FK/IK implementation  
+**Updated:** 2026-11-27  
+**Track:** Y1 / Q1 / SCARA-01 FK verified, workspace / IK next  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
+
+## Current resume point — 2026-11-27 (supersedes 2026-11-21 below)
+
+**Learner authored and uploaded Python FK and four tests.** Saved code at [SCARA FK practice](exercises/01_robot_math/scara_fk_practice.py), tests at [four checks](exercises/01_robot_math/test_scara_fk_practice.py). Assistant independently ran uploaded files via Python unittest: **4/4 PASS**. Geometric configurations: extended (240,0) mm; vertical (0,240) mm; folded (20,0) mm; mixed q=(30°,60°) -> (112.5833,175) mm. [Checkpoint evidence](docs/evidence/2026-11-27-scara-fk-learner-4-tests.md). This is an FK function-and-test checkpoint, not complete Issue #3, and root test discovery wasn't run. Do not overstate proficiency.
+
+**Next ONE teaching action (active now):** Move to ideal planar 2R **workspace/reachability** before inverse kinematics. With L1=130 mm and L2=110 mm, show why the reachable radial interval is 20–240 mm. Check the provisional Place target (120,140) mm using r=sqrt(x²+y²); explain how joint limits/collisions may further restrict the usable workspace. Then introduce IK elbow-branch geometry via law of cosines, with one guided numerical question at a time. Learner explicitly requested to proceed with teaching rather than more ROS concurrency review or logging overhead.
+
+**Recent Python semantics note:** learner discussed `self`, instance methods, and unittest; in a two-Motor example answered speed values 150 and 250, corrected to **150 and 200** (only motor1 accelerated). Do not mark instance-state concept as fully mastered without a later check.
 
 ## Current resume point — 2026-11-21 (supersedes older next-action text below)
 
