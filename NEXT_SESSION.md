@@ -1,8 +1,16 @@
 # Next session — resume here
 
-**Updated:** 2026-11-27  
-**Track:** Y1 / Q1 / SCARA-01 FK verified, workspace / IK next  
+**Updated:** 2026-11-28  
+**Track:** Y1 / Q1 / SCARA-01 Jacobian IK checkpoint complete; Weeks 5–6 mechanical design next  
 **Current engineering project:** **SCARA-01**, a compact low-energy R-R-P-R SCARA concept (three positional coordinates plus wrist yaw), with a separate printable gripper intended first for tray-to-tray transport of small 3D-printed parts.
+
+## Current resume point — 2026-11-28 (active)
+
+**Learner asked to register progress and advance along the curriculum instead of repeating IK/P step-size drills.** Follow their request. **Current next stage:** [Q1 Weeks 5–6](docs/roadmap/Q1-2026-10.md) — SCARA-01 mechanical concepts, actuator/encoder feedback options, printable links, payload, stiffness, backlash and torque/speed estimates. Work through ONE concept/example at a time. Start by distinguishing **static gravity-induced bending moments** in horizontal SCARA printed links from **torque about vertical J1/J2 rotation axes** (gravity alone does not induce torque around a vertical yaw axis for a level arm). Example purely illustrative: payload 0.10 kg at 0.24 m creates bending moment ~0.235 N·m at base before link/gripper own masses, but ideal static motor torque about vertical yaw axis remains zero. Ask learner to reason why, then continue with inertial and friction torque, bearings, link sizing.
+
+**Verified new learner artifact:** [scara_jacobian_ik.py](exercises/01_robot_math/scara_jacobian_ik.py), independently run from uploaded file with the existing [FK](exercises/01_robot_math/scara_fk_practice.py). Numerical inverse-J iterative method q0=(0°,90°), target=(120,140)mm, alpha=0.5, tolerance=0.1mm, converged to (120.013,139.940)mm, residual 0.0611mm; **9 joint correction steps**, although script says `after 8 iterations` due to zero-based loop index. Tests remain a single starting pose/target; no physical controller. [Full checkpoint](docs/evidence/2026-11-28-scara-jacobian-ik-checkpoint.md). Prior independent planar FK 4 tests passed. Skill levels M03 L2, M04 L1, M05 L1 conservatively assessed. Learner correctly explained IK iterations do not determine real motor motion speed. User wanted to move on.
+
+**Open scope intentionally deferred:** [Issue #3](https://github.com/hamora1370/Physical-AI/issues/3) still open for joint limits, multi-target IK, both elbow branches, singularity/robustness tests, root-suite check. [Issue #6](https://github.com/hamora1370/Physical-AI/issues/6) remains open for engineering brief and requirements. No fixed physical dimensions, validated link material, specific gripper/motor, or hardware evidence. Do not divert into repeated basic kinematics until an engineering design problem requires it.
 
 ## Current resume point — 2026-11-27 (supersedes 2026-11-21 below)
 
