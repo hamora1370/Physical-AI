@@ -5,7 +5,7 @@ Math,M03,Forward kinematics,M02,Y1,L3,L2,fk_4_tests_passed,docs/evidence/2026-11
 Math,M04,Jacobians and singularities,M03,Y1,L3,L1,jacobian_code_one_case_passed,docs/evidence/2026-11-28-scara-jacobian-ik-checkpoint.md,2026-12-20
 Math,M05,Inverse kinematics,M03;M04,Y1,L3,L1,one_target_iterative_ik_converged,docs/evidence/2026-11-28-scara-jacobian-ik-checkpoint.md,2026-12-05
 Mechanics,ME01,Mechanisms degrees of freedom and usable workspace,M01,Y1,L3,L0,concept_discussed,docs/evidence/2026-10-26-scara-motion-jacobian-learning.md,
-Mechanics,ME02,Link stiffness backlash and preliminary actuator sizing,ME01;M03,Y1,L2,L0,unassessed,,
+Mechanics,ME02,Link stiffness backlash and preliminary actuator sizing,ME01;M03,Y1,L2,L0,guided_inertia_calculations,docs/evidence/2026-11-28-scara-gravity-bending-and-inertia.md,2026-12-06
 Sensors,SN01,Encoder homing travel limits and position feedback,ME01;C01,Y1,L2,L0,concept_discussed,docs/evidence/2026-11-02-scara-feedback-and-fault-learning.md,2026-11-08
 Sensors,SN02,Observable gripper aperture and grasp feedback basics,SN01;ME01,Y1,L2,L0,unassessed,,
 Systems,I05,Low-energy benchtop limits and independent stop fundamentals,ME01;C01,Y1,L2,L0,unassessed,,
